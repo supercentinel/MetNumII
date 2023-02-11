@@ -1,5 +1,3 @@
-use std::num;
-
 struct Punto
 {
     x: f64,
