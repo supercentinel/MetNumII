@@ -1,3 +1,20 @@
+function f2(x::Float, y::Float64, z::Float64)
+
+end
+
+function f2(x::Float, y::Float64, z::Float64)
+
+end
+
+function f2(x::Float, y::Float64, z::Float64)
+
+end
+function f2(x::Float, y::Float64, z::Float64)
+
+end
+function f2(x::Float, y::Float64, z::Float64)
+
+end
 function newton(A:Array{Float64}, tolerancia::Float64, iteraciones::int64)
 
     while true
