@@ -4,11 +4,11 @@ mutable struct Punto
 end
 
 function g_1(x::Float64, y::Float64)
-    return -(((x * x) - y - 2.0 - (4.0 * x))/(4.0));
+    return ((x ^ 2)- (y ^ 2) - x - 3 + (3 * x))/(3)
 end
 
 function g_2(x::Float64, y::Float64)
-    return return -(((2.0 * x * y) - 3.0 - (5.0 * y))/(5.0));
+    return -(x + (2 * y) + 1 - (3 * y))/(3)
 end
 
 function distancia(p_1::Punto, p_2::Punto)
@@ -27,10 +27,10 @@ function punto_fijo(x::Float64, y::Float64, tolerancia::Float64, iteraciones::In
 
         println(k, "|", p.x, "|", p.y, "|", e_a)
 
-        if k >= iteraciones 
+        if k >= iteraciones
             break
         end
-        if e_a <= tolerancia 
+        if e_a <= tolerancia
             break
         end
 
@@ -38,9 +38,16 @@ function punto_fijo(x::Float64, y::Float64, tolerancia::Float64, iteraciones::In
         p.y = g_2(pkm1.x, pkm1.y)
 
         e_a = distancia(p, pkm1)
-            
+
         k += 1
     end
-    
+
     return p
 end
+
+
+function main()
+    p = punto_fijo(0.0, 0.0,0.0005, 100)
+end
+
+main()
