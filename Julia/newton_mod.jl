@@ -1,20 +1,28 @@
 #using LinearAlgebra
 using Printf
 
-function f1(x::Float64, y::Float64)
-    return (x ^ 2.0) - (10.0 * x) + (y ^ 2.0) + 6.0
+function f1(x::Float64, y::Float64, z::Float64)
+    return (x ^ 2) + (2 * (z ^ 2)) + y - 10.0
 end
 
-function f2(x::Float64, y::Float64)
-    return (x * (y * y)) + x - (10.0 * y) + 4.0
+function f2(x::Float64, y::Float64, z::Float64)
+    return (5 * x) - (6 * y) + z
 end
 
-function f1x(x::Float64, y::Float64)
-    return (2.0 * x) - 10.0
+function f3(x::Float64, y::Float64, z::Float64)
+    return z - (x ^ 2) - (y ^ 2)
 end
-
-function f2y(x::Float64, y::Float64)
-    return (2.0 * x * y) - 10.0
+#con respecto a z
+function f1d(x::Float64, y::Float64, z::Float64)
+    return (4 * z)
+end
+#con respecto a x
+function f2d(x::Float64, y::Float64, z::Float64)
+    return 5
+end
+#con respecto a y
+function f3d(x::Float64, y::Float64, z::Float64)
+    return -(2 * y)
 end
 
 #En la libería estándar existe en LinearAlgebra la función norma que hace lo mismo. Meh.
@@ -34,22 +42,26 @@ function newton_mod(X::Array{Float64}, tolerancia::Float64, iteraciones::Int64)
 
     X_km1 = X
     X_k = X
-    F_X_k_ = [0.0, 0.0]
-    δF_X_k_ = [0.0, 0.0]
+    F_X_k_ = [0.0, 0.0, 0.0]
+    δF_X_k_ = [0.0, 0.0, 0.0]
     e_a = 1.0
     k = 0
+
+    println(X_km1)
 
     while true
 
         X_km1 = X_k
 
-        F_X_k_[1] = f1(X_km1[1], X_km1[2])
-        F_X_k_[2] = f2(X_km1[1], X_km1[2])
+        F_X_k_[1] = f1(X_km1[1], X_km1[2], X_km1[3])
+        F_X_k_[2] = f2(X_km1[1], X_km1[2], X_km1[3])
+        F_X_k_[3] = f3(X_km1[1], X_km1[2], X_km1[3])
 
         println(F_X_k_)
 
-        δF_X_k_[1] = f1x(X_km1[1], X_km1[2])
-        δF_X_k_[2] = f2y(X_km1[1], X_km1[2])
+        δF_X_k_[1] = f1d(X_km1[1], X_km1[2], X_km1[3])
+        δF_X_k_[2] = f2d(X_km1[1], X_km1[2], X_km1[3])
+        δF_X_k_[3] = f3d(X_km1[1], X_km1[2], X_km1[3])
 
         println(δF_X_k_)
 
@@ -66,7 +78,9 @@ function newton_mod(X::Array{Float64}, tolerancia::Float64, iteraciones::Int64)
 
         X_k[1] = X_km1[1] - ((F_X_k_[1])/(δF_X_k_[1]))
         X_k[2] = X_km1[2] - ((F_X_k_[2])/(δF_X_k_[2]))
+        X_k[3] = X_km1[3] - ((F_X_k_[3])/(δF_X_k_[3]))
 
+        println(k)
         println(X_k)
 
         k += 1
