@@ -12,17 +12,17 @@ end
 function f3(x::Float64, y::Float64, z::Float64)
     return z - (x ^ 2) - (y ^ 2)
 end
-#con respecto a z
+#con respecto a x
 function f1d(x::Float64, y::Float64, z::Float64)
-    return 4 * (z ^ 2)
+    return 2 * x
 end
 #con respecto a y
 function f2d(x::Float64, y::Float64, z::Float64)
     return -6.0
 end
-#con respecto a x
+#con respecto a z
 function f3d(x::Float64, y::Float64, z::Float64)
-    return -(2 * x)
+    return 1.0
 end
 
 #En la libería estándar existe en LinearAlgebra la función norma que hace lo mismo. Meh.
