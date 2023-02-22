@@ -65,6 +65,17 @@ function newton(A::Array{Float64}, tolerancia::Float64, iteraciones::Int64, TeX:
             #Imprime F(X^)
             @printf("|%c\\begin%cbmatrix%c%.10LF \\\\ %.10LF \\\\ %.10LF\\end%cbmatrix%c%c", 36, 123, 125, F_xk_[1], F_xk_[2], F_xk_[3], 123, 125, 36)
             @printf("|%.10LF|\n", e_r)
+        else
+            print("k = ")
+            println(k)
+            print("X^k = ")
+            println(A_k)
+            print("J(X^k) = ")
+            println(J_xk_)
+            print("F(X^k) = ")
+            println(F_xk_)
+            print("Error = ")
+            println(e_r)
         end
 
         if e_r <= tolerancia
