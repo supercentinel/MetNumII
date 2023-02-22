@@ -94,13 +94,16 @@ function newton_mod(X::Array{Float64}, tolerancia::Float64, iteraciones::Int64)
     return X_k
 
 end
-#=
+
 function main()
-    A = [0.5, 0.5]
+    A = [1.0, 1.0, 2.0]
     println(A)
-    R = newton_mod(A, 0.00005, 10)
+    R = newton_mod(A, 0.0005, 10)
     println(R)
+    A_2 = [-1.75, -0.75, 2.0]
+    R_2 = newton_mod(A_2, 0.0005, 10)
+    println(R_2)
 end
 
 main()
-=#
+
