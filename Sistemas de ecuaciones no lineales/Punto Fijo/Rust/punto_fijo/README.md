@@ -1,9 +1,8 @@
 # Punto fijo
 
-
+$g_1(x, y) = $
 $$
-g_1(x, y) = \newline
-g_2(x, y) =
+g_2(x, y) = 
 $$
 
 ```
