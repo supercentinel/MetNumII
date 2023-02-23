@@ -38,20 +38,20 @@ fn f3(x:&Vector3) -> f64
 {
     return x.z - x.x.powi(2) - x.y.powi(2);
 }
-//con respecto a x
+//con respecto a z
 fn f1d(x:&Vector3) -> f64
 {
-    return 2.0 * x.x;
-}
-//con respecto a z
-fn f2d(x:&Vector3) -> f64
-{
-    return 1.0;
+    return 4.0 * x.z;
 }
 //con respecto a y
+fn f2d(x:&Vector3) -> f64
+{
+    return -6.0;
+}
+//con respecto a x
 fn f3d(x:&Vector3) -> f64
 {
-    return -2.0 * x.y;
+    return -2.0 * x.x;
 }
 
 fn newton_mod(v:&Vector3, tolerancia:f64, iteraciones:u32) -> Vector3
@@ -67,13 +67,13 @@ fn newton_mod(v:&Vector3, tolerancia:f64, iteraciones:u32) -> Vector3
 
     loop
     {
-        f_x_k.x = f1(&x);
-        f_x_k.y = f3(&x);
-        f_x_k.z = f2(&x);
+        f_x_k.x = f3(&x);
+        f_x_k.y = f2(&x);
+        f_x_k.z = f1(&x);
 
-        df_x_k.x = f1d(&x);
-        df_x_k.y = f3d(&x);
-        df_x_k.z = f2d(&x);
+        df_x_k.x = f3d(&x);
+        df_x_k.y = f2d(&x);
+        df_x_k.z = f1d(&x);
 
         e_a = f_x_k.norma();
 
