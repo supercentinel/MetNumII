@@ -54,13 +54,16 @@ fn f3d(x:&Vector3) -> f64
     return 1.0;
 }
 
-fn newton_mod(V:&Vector3, tolerancia:f64, iteraciones:u32) -> Vector3
+fn newton_mod(v:&Vector3, tolerancia:f64, iteraciones:u32) -> Vector3
 {
-    let mut x:Vector3 = Vector3 {x:V.x, y:V.y, z:V.z};
+    let mut x:Vector3 = Vector3 {x:v.x, y:v.y, z:v.z};
     let mut f_x_k:Vector3 = Vector3::new(0.0, 0.0, 0.0);
     let mut df_x_k:Vector3 = Vector3::new(0.0, 0.0, 0.0);
     let mut e_a:f64 = 0.0;
     let mut k:u32 = 0;
+
+    println!("|{:<4}|{:<20.15}|{:<20.15}|{:<20.15}|{:<20.15}|", "k", "X^k", "F(X^k)", "dF(X^k)", "Error");
+    println!("------------------------------------------------------------------------------------------");
 
     loop
     {
@@ -77,6 +80,7 @@ fn newton_mod(V:&Vector3, tolerancia:f64, iteraciones:u32) -> Vector3
         println!("|{:<4}|{:<20.15}|{:<20.15}|{:<20.15}|{:<20.15}|", k, x.x, f_x_k.x, df_x_k.x, e_a);
         println!("|{:<4}|{:<20.15}|{:<20.15}|{:<20.15}|", "", x.y, f_x_k.y, df_x_k.y);
         println!("|{:<4}|{:<20.15}|{:<20.15}|{:<20.15}|", "", x.z, f_x_k.z, df_x_k.z);
+        println!("------------------------------------------------------------------------------------------");
 
         if e_a <= tolerancia {break};
         if k >= iteraciones {break} ;
@@ -95,7 +99,7 @@ fn newton_mod(V:&Vector3, tolerancia:f64, iteraciones:u32) -> Vector3
 fn main()
 {
     let a:Vector3 = Vector3::new(1.0, 1.0, 2.0);
-    let r:Vector3 = newton_mod(&a, 0.005, 10);
+    let r:Vector3 = newton_mod(&a, 0.005, 100);
     println!("Resultado");
     println!("|{:<20.15}|{:<20.15}|{:<20.15}|", r.x, r.y, r.z);
 }
