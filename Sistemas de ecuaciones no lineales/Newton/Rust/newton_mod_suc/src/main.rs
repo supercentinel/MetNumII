@@ -54,7 +54,7 @@ fn f3d(x:&Vector3) -> f64
     return -2.0 * x.y;
 }
 
-fn newton_mod(v:&Vector3, tolerancia:f64, iteraciones:u32) -> Vector3
+fn newton_mod_suc(v:&Vector3, tolerancia:f64, iteraciones:u32) -> Vector3
 {
     let mut x:Vector3 = Vector3 {x:v.x, y:v.y, z:v.z};
     let mut f_x_k:Vector3 = Vector3::new(0.0, 0.0, 0.0);
@@ -105,7 +105,7 @@ fn newton_mod(v:&Vector3, tolerancia:f64, iteraciones:u32) -> Vector3
 fn main()
 {
     let a:Vector3 = Vector3::new(1.0, 1.0, 2.0);
-    let r:Vector3 = newton_mod(&a, 0.005, 100);
+    let r:Vector3 = newton_mod_suc(&a, 0.005, 100);
     println!("Resultado");
     println!("|{:<20.15}|{:<20.15}|{:<20.15}|", r.x, r.y, r.z);
 }
