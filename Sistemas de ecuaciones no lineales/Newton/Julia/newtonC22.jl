@@ -5,7 +5,7 @@ function f1(x::Float64, y::Float64)
 end
 
 function f2(x::Float64, y::Float64)
-    return (x * (y ^ 2)) + x + (10.0 * y) + 8.0
+    return (x * (y ^ 2)) + x - (10.0 * y) + 8.0
 end
 
 function f1x(x::Float64, y::Float64)
@@ -38,13 +38,21 @@ function newton(A::Array{Float64}, tolerancia::Float64, iteraciones::Int64, TeX:
     J = [f1x f1y; f2x f2y]
     F = [f1 f2]
     J_xk_ = zeros(Float64, 2 , 2)
+    F_xkm1_ = zeros(Float64, 2, 1)
     F_xk_ = zeros(Float64, 2, 1)
+    J_inv = zeros(Float64, 2, 2)
+    ΔX = zeros(Float64, 2, 1)
+    ΔF_X_ = zeros(Float64, 2, 1);
     e_r = 1.0
     k = 0
 
     while true
 
         A_km1 = A_k
+
+        for row in 1:2
+            F_xkm1_[row] = F_xk_[row]
+        end
 
         for row in 1:2
             for column in 1:2
@@ -55,6 +63,12 @@ function newton(A::Array{Float64}, tolerancia::Float64, iteraciones::Int64, TeX:
         for row in 1:2
             F_xk_[row] = F[row](A_k[1], A_k[2])
         end
+
+        J_inv = inv(J_xk_)
+
+        A_k = A_k - (inv(J_xk_) * F_xk_)
+        ΔX = A_k - A_km1
+        ΔF_X_ = F_xk_ - F_xkm1_
 
         if TeX == true
             @printf("|%d", k)
@@ -70,10 +84,16 @@ function newton(A::Array{Float64}, tolerancia::Float64, iteraciones::Int64, TeX:
             println(k)
             print("X^k = ")
             println(A_k)
+            print("ΔX = ")
+            println(ΔX)
             print("J(X^k) = ")
             println(J_xk_)
+            print("J^-1 = ")
+            println(J_inv)
             print("F(X^k) = ")
             println(F_xk_)
+            print("ΔF_X_ = ")
+            println(ΔF_X_);
             print("Error = ")
             println(e_r)
         end
@@ -87,7 +107,6 @@ function newton(A::Array{Float64}, tolerancia::Float64, iteraciones::Int64, TeX:
 
         k += 1
 
-        A_k = A_k - (inv(J_xk_) * F_xk_)
         e_r = Error_a(A_k, A_km1)/Norma(A_k)
 
     end
