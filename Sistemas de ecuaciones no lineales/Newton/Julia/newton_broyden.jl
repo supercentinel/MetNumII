@@ -44,9 +44,10 @@ function newton_broyden(A::Array{Float64}, tolerancia::Float64, iteraciones::Int
     ΔX = zeros(Float64, 2, 1)
     ΔF_X_ = zeros(Float64, 2, 1);
     She_Morr = zeros(Float64, 2, 2)
+    She_Morr_km1 = zeros(Float64, 2, 2)
     e_r = 1.0
     k = 0
-
+    #inicio de la primra iteración usando la matriz Jacobiana inversa
     for row in 1:2
         F_xkm1_[row] = F[row](A_k[1], A_k[2])
     end
@@ -72,18 +73,17 @@ function newton_broyden(A::Array{Float64}, tolerancia::Float64, iteraciones::Int
     tru_den = denom[1]
 
     She_Morr = (ΔX - (J_inv * ΔF_X_)) * (transpose(ΔX) * J_inv)
-#=
-    for i in 1:2
-        for j in 1:2
-            She_Morr[i][j] = She_Morr[i][j]/2
-        end
-    end
-=#
 
     She_Morr = She_Morr * 1/tru_den
 
+    println(J_inv)
+    return
     She_Morr = J_inv - She_Morr
 
+    #fin de la primera iteración. Ahora podemos continuar sin la matriz Jacobiana
+
+    print("k = ")
+    println(k)
     print("X^k-1 = ")
     println(A_km1)
     print("X^k = ")
@@ -100,6 +100,78 @@ function newton_broyden(A::Array{Float64}, tolerancia::Float64, iteraciones::Int
     println(She_Morr)
     print("Denom = ")
     println(denom)
+
+    k += 1
+
+    while true
+        A_km1 = A_k
+        F_xkm1_ = F_xk_
+        #=
+        for row in 1:2
+            F_xkm1_[row] = F[row](A_k[1], A_k[2])
+        end
+        =#
+        #A_k = (inv(She_Morr) * F_xkm1_)
+        #println(inv(She_Morr) * F_xkm1_)
+        #break
+
+        A_k = A_km1 - (inv(She_Morr) * ΔF_X_)
+        println(A_k)
+        break
+
+        for row in 1:2
+             F_xk_[row] = F[row](A_k[1], A_k[2])
+        end
+
+        println(F_xk_)
+        ΔX = A_k - A_km1
+        ΔF_X_ = F_xk_ - F_xkm1_
+        She_Morr_km1 = She_Morr
+
+        denom = transpose(ΔX) * inv(She_Morr) * ΔF_X_
+        break
+        tru_den = denom[1]
+
+        She_Morr = (ΔX - (inv(She_Morr_km1) * ΔF_X_)) * (transpose(ΔX) * inv(She_Morr_km1))
+
+        She_Morr = She_Morr * 1/tru_den
+
+        She_Morr = inv(She_Morr_km1) - She_Morr
+
+        e_r = Norma(F_xk_)
+
+        print("k = ")
+        println(k)
+        print("X^k-1 = ")
+        println(A_km1)
+        print("X^k = ")
+        println(A_k)
+        print("F(X^k-1) = ")
+        println(F_xkm1_)
+        print("F(X^k) = ")
+        println(F_xk_)
+        print("ΔX = ")
+        println(ΔX)
+        print("ΔF(X) = ")
+        println(ΔF_X_)
+        print("Sherman-Morrison = ")
+        println(She_Morr)
+        print("Denom = ")
+        println(denom)
+        print("Error = ")
+        println(e_r)
+
+
+        if e_r <= tolerancia
+            break
+        end
+        if k >= iteraciones
+            break
+        end
+
+        k += 1
+
+    end
 
     return A_k
 end
