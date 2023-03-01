@@ -10,7 +10,7 @@ function f2a(X::Array{Float64})
 end
 
 function f1ax(X::Array{Float64})
-    return (2 * x) + X[2]
+    return (2 * X[1]) + X[2]
 end
 
 function f1ay(X::Array{Float64})
@@ -131,11 +131,25 @@ function f3cdz(X::Array{Float64} )
 end
 
 function Error_a(A_k::Array{Float64}, A_km1::Array{Float64})
-    return √(((A_k[1] - A_km1[1]) ^ 2)+((A_k[2] - A_km1[2]) ^ 2)+((A_k[3] - A_km1[3]) ^ 2))
+    ∑ = 0.0
+
+    for i in 1:length(A_k)
+        ∑ += ((A_k[i] - A_km1[i]) ^ 2)
+    end
+
+    return √∑
+    #return √(((A_k[1] - A_km1[1]) ^ 2)+((A_k[2] - A_km1[2]) ^ 2)+((A_k[3] - A_km1[3]) ^ 2))
 end
 
 function Norma(A::Array{Float64})
-    return √(((A[1]) ^ 2)+((A[2]) ^ 2)+((A[3]) ^ 2))
+    ∑= 0.0
+
+    for i in 1:length(A)
+        ∑ += (A[i] ^ 2)
+    end
+
+    return √∑
+    #return √(((A[1]) ^ 2)+((A[2]) ^ 2)+((A[3]) ^ 2))
 end
 
 
@@ -143,8 +157,8 @@ function newton(A::Array{Float64},F::Array{Function},J::Array{Function} , tolera
 
     A_k = copy(A)
     A_km1 = copy(A)
-    J_xk_ = zeros(Float64, 3 , 3)
-    F_xk_ = zeros(Float64, 3, 1)
+    J_xk_ = zeros(Float64,  length(F), length(F))
+    F_xk_ = zeros(Float64, length(F), 1)
     e_r = 1.0
     k = 0
 
@@ -214,14 +228,22 @@ F_3 = [f1c f2c f3cd]
 J_4 = [f1dx f1dy f1dz; f2dx f2dy f2dz; f3cdx f3cdy f3cdz]
 F_4 = [f1d f2d f3cd]
 
+println("Instrucciones: ")
+println("Para usar la funcion newton() necesita de 6 argumentos los cuales son:")
+println("1.- El Punto inicial. lo declaras en la consola de la siguiente manera → A=[0.0, 0.0, 0.0]")
+println("2.- El sistema de ecuaciones. Puede ser F_1 a F_4  los dos primeros teniendo solo dos variables")
+println("3.- la matriz jacobiana. Al igual que el segundo argumento → J_1 a J_4")
+println("4.- y 5.- la tolerancia siendo un flotante 0.0 y las iteraciones siendo un entero")
+println("6.- solo dejalo como: true")
+#=
 function main()
-    A = [1.0, 1.0, 1.0]
-    R = newton(A, F_4, J_4, 0.005, 10, false)
+    A = [2.0, 3.0]
+    R = newton(A, F_1, J_1, 0.005, 10, false)
     println(R)
 end
 
 main()
-
+=#
 #=
 function main()
     A_1 = [1.0, 1.0, 2.0]
