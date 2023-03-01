@@ -1,27 +1,50 @@
 using Printf
 
-function f1(x::Float64, y::Float64)
-    return (x ^ 2) - (10.0 * x) + (y ^ 2) + 8.0
+function f1(x::FLoat64, y::Float64, z::Float64)
+    return (x ^ 2) - x (2 * (y ^ 2)) + (y * z) - 10
 end
 
-function f2(x::Float64, y::Float64)
-    return (x * (y ^ 2)) + x - (10.0 * y) + 8.0
+function f2(x::FLoat64, y::Float64, z::Float64)
+    return (5 * x) - (6 * y) + z
 end
 
-function f1x(x::Float64, y::Float64)
-    return (2 * x) - 10.0
+function f3(x::Float64, y::Float64, z::Float64)
+    return z - (x ^ 2) - (y ^ 2)
+
+function f1x(x::FLoat64, y::Float64, z::Float64)
+    return (2.0 * x) -1
 end
 
-function f1y(x::Float64, y::Float64)
-    return 2.0 * y
+function f1y(x::FLoat64, y::Float64, z::Float64)
+    return (2.0 * y) - z
 end
 
-function f2x(x::Float64, y::Float64)
-    return (y ^ 2) + 1
+function f1z(x::FLoat64, y::Float64, z::Float64)
+    return y
 end
 
-function f2y(x::Float64, y::Float64)
-    return (2 * x * y) - 10.0
+function f2x(x::FLoat64, y::Float64, z::Float64)
+    return 5.0 * x
+end
+
+function f2y(x::FLoat64, y::Float64, z::Float64)
+    return -6.0 * y
+end
+
+function f2z(x::FLoat64, y::Float64, z::Float64)
+    return 1.0
+end
+
+function f3x(x::FLoat64, y::Float64, z::Float64)
+    return -2.0 * x
+end
+
+function f3y(x::FLoat64, y::Float64, z::Float64)
+    return -2.0 * y
+end
+
+function f3z(x::FLoat64, y::Float64, z::Float64)
+    return 1.0
 end
 
 function Error_a(A_k::Array{Float64}, A_km1::Array{Float64})
