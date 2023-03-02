@@ -1,83 +1,84 @@
 using Printf
 
-function f1(x::FLoat64, y::Float64, z::Float64)
-    return (x ^ 2) - x (2 * (y ^ 2)) + (y * z) - 10
+function f1(X::Array{Float64})
+    return (X[1] ^ 2) - X[1] + (2 * (X[2] ^ 2)) + (X[2] * X[3]) - 10
 end
 
-function f2(x::FLoat64, y::Float64, z::Float64)
-    return (5 * x) - (6 * y) + z
+function f2(X::Array{Float64})
+    return (5 * X[1]) - (6 * X[2]) + X[3]
 end
 
-function f3(x::Float64, y::Float64, z::Float64)
-    return z - (x ^ 2) - (y ^ 2)
-
-function f1x(x::FLoat64, y::Float64, z::Float64)
-    return (2.0 * x) -1
+function f3(X::Array{Float64})
+    return X[3] - (X[1] ^ 2) - (X[2] ^ 2)
 end
 
-function f1y(x::FLoat64, y::Float64, z::Float64)
-    return (2.0 * y) - z
+function f1x(X::Array{Float64})
+    return (2.0 * X[1]) -1
 end
 
-function f1z(x::FLoat64, y::Float64, z::Float64)
-    return y
+function f1y(X::Array{Float64})
+    return (2.0 * X[2]) - X[3]
 end
 
-function f2x(x::FLoat64, y::Float64, z::Float64)
-    return 5.0 * x
+function f1z(X::Array{Float64})
+    return X[2]
 end
 
-function f2y(x::FLoat64, y::Float64, z::Float64)
-    return -6.0 * y
+function f2x(X::Array{Float64})
+    return 5.0 * X[1]
 end
 
-function f2z(x::FLoat64, y::Float64, z::Float64)
+function f2y(X::Array{Float64})
+    return -6.0 * X[2]
+end
+
+function f2z(X::Array{Float64})
     return 1.0
 end
 
-function f3x(x::FLoat64, y::Float64, z::Float64)
-    return -2.0 * x
+function f3x(X::Array{Float64})
+    return -2.0 * X[1]
 end
 
-function f3y(x::FLoat64, y::Float64, z::Float64)
-    return -2.0 * y
+function f3y(X::Array{Float64})
+    return -2.0 * X[2]
 end
 
-function f3z(x::FLoat64, y::Float64, z::Float64)
+function f3z(X::Array{Float64})
     return 1.0
-end
-
-function Error_a(A_k::Array{Float64}, A_km1::Array{Float64})
-    return √(((A_k[1] - A_km1[1]) ^ 2)+((A_k[2] - A_km1[2]) ^ 2))
 end
 
 function Norma(A::Array{Float64})
-    return √(((A[1]) ^ 2)+((A[2]) ^ 2))
+    ∑= 0.0
+
+    for i in 1:length(A)
+        ∑ += (A[i] ^ 2)
+    end
+
+    return √∑
 end
 
-function newton_broyden(A::Array{Float64}, tolerancia::Float64, iteraciones::Int64)
+function newton_broyden(A::Array{Float64}, F::Array{Function},J::Array{Function}, tolerancia::Float64, iteraciones::Int64)
     A_k = copy(A)
     A_km1 = copy(A)
-    J = [f1x f1y; f2x f2y]
-    F = [f1 f2]
-    J_xk_ = zeros(Float64, 2 , 2)
-    F_xkm1_ = zeros(Float64, 2, 1)
-    F_xk_ = zeros(Float64, 2, 1)
-    J_inv = zeros(Float64, 2, 2)
-    ΔX = zeros(Float64, 2, 1)
-    ΔF_X_ = zeros(Float64, 2, 1);
-    She_Morr = zeros(Float64, 2, 2)
-    She_Morr_km1 = zeros(Float64, 2, 2)
+    J_xk_ = zeros(Float64, length(F) , length(F))
+    F_xkm1_ = zeros(Float64, length(F), 1)
+    F_xk_ = copy(F_xkm1_)
+    J_inv = copy(J_xk_)
+    ΔX = copy(A)
+    ΔF_X_ = copy(F_xk_)
+    She_Morr = copy(J_xk_)
+    She_Morr_km1 = copy(She_Morr)
     e_r = 1.0
     k = 0
     #inicio de la primra iteración usando la matriz Jacobiana inversa
-    for row in 1:2
-        F_xkm1_[row] = F[row](A_k[1], A_k[2])
+    for row in 1:length(F)
+        F_xkm1_[row] = F[row](A_k)
     end
 
-    for row in 1:2
-        for column in 1:2
-            J_xk_[row,column] = J[row,column](A_k[1], A_k[2])
+    for row in 1:size(J, 1)
+        for column in 1:size(J, 1)
+            J_xk_[row,column] = J[row,column](A_k)
          end
     end
 
@@ -86,7 +87,7 @@ function newton_broyden(A::Array{Float64}, tolerancia::Float64, iteraciones::Int
     A_k = A_k - (J_inv * F_xkm1_)
 
     for row in 1:2
-        F_xk_[row] = F[row](A_k[1], A_k[2])
+        F_xk_[row] = F[row](A_k)
     end
 
     ΔX= A_k - A_km1
@@ -129,7 +130,7 @@ function newton_broyden(A::Array{Float64}, tolerancia::Float64, iteraciones::Int
         A_k = A_km1 - (She_Morr_km1 * F_xkm1_)
 
         for row in 1:2
-            F_xk_[row] = F[row](A_k[1], A_k[2])
+            F_xk_[row] = F[row](A_k)
         end
 
         ΔX = A_k - A_km1
@@ -182,8 +183,11 @@ function newton_broyden(A::Array{Float64}, tolerancia::Float64, iteraciones::Int
 end
 
 function main()
-    A = [2.0, 3.0]
-    R = newton_broyden(A, 0.005, 10)
+    J = [f1x f1y f1z; f2x f2y f2z; f3x f3y f3z]
+    F = [f1 f2 f3]
+    A = [2.0, 3.0, 2.0]
+
+    R = newton_broyden(A, F, J, 0.005, 10)
     print("Resultado = ")
     println(R)
 end
