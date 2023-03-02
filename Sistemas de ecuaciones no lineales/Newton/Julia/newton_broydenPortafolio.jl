@@ -185,9 +185,9 @@ end
 function main()
     J = [f1x f1y f1z; f2x f2y f2z; f3x f3y f3z]
     F = [f1 f2 f3]
-    A = [2.0, 3.0, 2.0]
+    A = [1.15, 1.5, 3.5]
 
-    R = newton_broyden(A, F, J, 0.005, 10)
+    R = newton_broyden(A, F, J, 0.5, 10)
     print("Resultado = ")
     println(R)
 end
