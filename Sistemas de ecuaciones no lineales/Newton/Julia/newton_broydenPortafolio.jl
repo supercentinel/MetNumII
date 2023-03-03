@@ -17,7 +17,7 @@ function f1x(X::Array{Float64})
 end
 
 function f1y(X::Array{Float64})
-    return (2.0 * X[2]) - X[3]
+    return (4.0 * X[2]) + X[3]
 end
 
 function f1z(X::Array{Float64})
@@ -25,11 +25,11 @@ function f1z(X::Array{Float64})
 end
 
 function f2x(X::Array{Float64})
-    return 5.0 * X[1]
+    return 5.0
 end
 
 function f2y(X::Array{Float64})
-    return -6.0 * X[2]
+    return -6.0
 end
 
 function f2z(X::Array{Float64})
@@ -70,7 +70,7 @@ function newton_broyden(A::Array{Float64}, F::Array{Function},J::Array{Function}
     She_Morr = copy(J_xk_)
     She_Morr_km1 = copy(She_Morr)
     e_r = 1.0
-    k = 0
+    k = 1
     #inicio de la primra iteración usando la matriz Jacobiana inversa
     for row in 1:length(F)
         F_xkm1_[row] = F[row](A_k)
@@ -86,7 +86,7 @@ function newton_broyden(A::Array{Float64}, F::Array{Function},J::Array{Function}
 
     A_k = A_k - (J_inv * F_xkm1_)
 
-    for row in 1:2
+    for row in 1:length(F)
         F_xk_[row] = F[row](A_k)
     end
 
@@ -97,18 +97,19 @@ function newton_broyden(A::Array{Float64}, F::Array{Function},J::Array{Function}
 
     She_Morr = (ΔX - (J_inv * ΔF_X_)) * (transpose(ΔX) * J_inv)
     She_Morr = She_Morr * 1/denom[1]
-    She_Morr = J_inv - She_Morr
+    She_Morr = J_inv + She_Morr
 
+    e_r = Norma(F_xk_)
     #fin de la primera iteración. Ahora podemos continuar sin la matriz Jacobiana
 
     print("k = ")
     println(k)
     print("X^k-1 = ")
     println(A_km1)
-    print("X^k = ")
-    println(A_k)
     print("F(X^k-1) = ")
     println(F_xkm1_)
+    print("X^k = ")
+    println(A_k)
     print("F(X^k) = ")
     println(F_xk_)
     print("ΔX = ")
@@ -119,7 +120,8 @@ function newton_broyden(A::Array{Float64}, F::Array{Function},J::Array{Function}
     println(She_Morr)
     print("Denom = ")
     println(denom)
-
+    print("Error = ")
+    println(e_r)
     k += 1
 
     while true
@@ -129,7 +131,7 @@ function newton_broyden(A::Array{Float64}, F::Array{Function},J::Array{Function}
 
         A_k = A_km1 - (She_Morr_km1 * F_xkm1_)
 
-        for row in 1:2
+        for row in 1:length(F)
             F_xk_[row] = F[row](A_k)
         end
 
@@ -142,7 +144,7 @@ function newton_broyden(A::Array{Float64}, F::Array{Function},J::Array{Function}
 
         She_Morr = She_Morr * 1/denom[1]
 
-        She_Morr = She_Morr_km1 - She_Morr
+        She_Morr = She_Morr_km1 + She_Morr
 
         e_r = Norma(F_xk_)
 
@@ -187,7 +189,7 @@ function main()
     F = [f1 f2 f3]
     A = [1.15, 1.5, 3.5]
 
-    R = newton_broyden(A, F, J, 0.5, 10)
+    R = newton_broyden(A, F, J, 0.00005, 20)
     print("Resultado = ")
     println(R)
 end
