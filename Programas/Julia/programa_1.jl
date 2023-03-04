@@ -150,12 +150,42 @@ println("3.- la matriz jacobiana. Al igual que el segundo argumento → J_1 a J_
 println("4.- y 5.- la tolerancia siendo un flotante 0.0 y las iteraciones siendo un entero")
 println("6.- solo dejalo como: false")
 
+function main()
+    opt::Int64
+
+    println("Sistemas de ecuaciones")
+    println("1.- f₁(x,y)=x²+xy-10=0")
+    println("    f₂(x,y)=y+3xy²-50=0")
+    println("")
+    println("2.- f₁(x,y)=x²+y²-9=0")
+    println("    f₂(x,y)=-ℯ^x-2y-3=0")
+    println("")
+    println("3.- f₁(x,y,z)=2x²-4x+y²+3z²+6z+2=0")
+    println("    f₂(x,y,z)=x²+y²-2y+2z²-5=0")
+    println("    f₃(x,y,z)=3x²-12x+y²-3z²+8=0")
+    println("")
+    println("4.- f₁(x,y,z)=x²-4x+y²=0")
+    println("    f₂(x,y,z)=x²-x-12y+1=0")
+    println("    f₃(x,y,z)=3x²-12x+y²-3z²+8=0")
+
+
+
+
+end
+
+
+main()
+
+
+
 #=
 function main()
     A = [2.0, 3.0]
     R = newton(A, F_1, J_1, 0.005, 10, false)
     println(R)
 end
+
+
 
 main()
 =#
