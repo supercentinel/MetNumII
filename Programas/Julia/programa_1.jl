@@ -130,6 +130,26 @@ function f3cdz(X::Array{Float64} )
     return 6 * X[3]
 end
 
+function print_menu()
+    println("Sistemas de ecuaciones")
+    println("1.- f₁(x,y)=x²+xy-10=0")
+    println("    f₂(x,y)=y+3xy²-50=0")
+    println()
+    println("2.- f₁(x,y)=x²+y²-9=0")
+    println("    f₂(x,y)=-ℯ^x-2y-3=0")
+    println()
+    println("3.- f₁(x,y,z)=2x²-4x+y²+3z²+6z+2=0")
+    println("    f₂(x,y,z)=x²+y²-2y+2z²-5=0")
+    println("    f₃(x,y,z)=3x²-12x+y²-3z²+8=0")
+    println()
+    println("4.- f₁(x,y,z)=x²-4x+y²=0")
+    println("    f₂(x,y,z)=x²-x-12y+1=0")
+    println("    f₃(x,y,z)=3x²-12x+y²-3z²+8=0")
+    println()
+    println("5. Salir")
+    println("Escoje uno de los sistemas de ecuaciones")
+end
+
 J_1 = [f1ax f1ay; f2ax f2ay]
 F_1 = [f1a f2a]
 
@@ -151,25 +171,57 @@ println("4.- y 5.- la tolerancia siendo un flotante 0.0 y las iteraciones siendo
 println("6.- solo dejalo como: false")
 
 function main()
-    opt::Int64
 
-    println("Sistemas de ecuaciones")
-    println("1.- f₁(x,y)=x²+xy-10=0")
-    println("    f₂(x,y)=y+3xy²-50=0")
-    println("")
-    println("2.- f₁(x,y)=x²+y²-9=0")
-    println("    f₂(x,y)=-ℯ^x-2y-3=0")
-    println("")
-    println("3.- f₁(x,y,z)=2x²-4x+y²+3z²+6z+2=0")
-    println("    f₂(x,y,z)=x²+y²-2y+2z²-5=0")
-    println("    f₃(x,y,z)=3x²-12x+y²-3z²+8=0")
-    println("")
-    println("4.- f₁(x,y,z)=x²-4x+y²=0")
-    println("    f₂(x,y,z)=x²-x-12y+1=0")
-    println("    f₃(x,y,z)=3x²-12x+y²-3z²+8=0")
+    opt::Int8 = 0
+    X = zeros(Float64, 2, 1)
+    X_2 = zeros(Float64, 3, 1)
+    R = zeros(Float64, 2, 1)
+    R_2 = zeros(Float64, 3, 1)
+    tolerancia::Float64 = 0.0
+    iteraciones::Int64 = 0
+
+    while opt != 5
+        print_menu()
+
+        str = readline()
+        opt = parse(Int8, str)
 
 
+        if opt > 0 && opt < 5
+            println("Introduce el vector inical")
+            if opt <= 2
+                for i in 1:length(X)
+                    @printf("X[%d] = ", i)
+                    str = readline()
+                    X[i] = parse(Float64, str)
+                end
+            else
+                for i in 1:length(X_2)
+                    @printf("X[%d] = ", i)
+                    str = readline()
+                    X_2[i] = parse(Float64, str)
+                end
+            end
+            println("Introduce la tolerancia")
+            str = readline()
+            tolerancia = parse(Float64, str)
+            println("Introduce el número de iteraciones")
+            str = readline()
+            iteraciones = parse(Int64, str)
+        end
 
+        if opt == 1
+            println(X)
+            println(tolerancia)
+            println(iteraciones)
+            R = newton(X, F_1, J_1, tolerancia, iteraciones, false)
+            println(R)
+        elseif opt == 2
+        elseif opt == 3
+            println(X_2)
+        elseif opt == 4
+        end
+    end
 
 end
 
