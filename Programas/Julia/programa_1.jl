@@ -162,14 +162,6 @@ F_3 = [f1c f2c f3cd]
 J_4 = [f1dx f1dy f1dz; f2dx f2dy f2dz; f3cdx f3cdy f3cdz]
 F_4 = [f1d f2d f3cd]
 
-println("Instrucciones: ")
-println("Para usar la funcion newton() necesita de 6 argumentos los cuales son:")
-println("1.- El Punto inicial. lo declaras en la consola de la siguiente manera → A=[0.0, 0.0, 0.0]")
-println("2.- El sistema de ecuaciones. Puede ser F_1 a F_4  los dos primeros teniendo solo dos variables")
-println("3.- la matriz jacobiana. Al igual que el segundo argumento → J_1 a J_4")
-println("4.- y 5.- la tolerancia siendo un flotante 0.0 y las iteraciones siendo un entero")
-println("6.- solo dejalo como: false")
-
 function main()
 
     opt::Int8 = 0
@@ -185,7 +177,6 @@ function main()
 
         str = readline()
         opt = parse(Int8, str)
-
 
         if opt > 0 && opt < 5
             println("Introduce el vector inical")
@@ -211,23 +202,25 @@ function main()
         end
 
         if opt == 1
-            println(X)
-            println(tolerancia)
-            println(iteraciones)
             R = newton(X, F_1, J_1, tolerancia, iteraciones, false)
-            println(R)
         elseif opt == 2
+            R = newton(x, F_2, J_2, tolerancia, iteraciones, false)
         elseif opt == 3
-            println(X_2)
+            R = newton(X_2, F_3, J_3, tolerancia, iteraciones, false)
         elseif opt == 4
+            R = newton(X_2, F_4, J_4, tolerancia, iteraciones, false)
+        end
+
+        println("Calcular otra raiz? [y/n]")
+        str = readline()
+        if cmp(str, "y") != 0
+            break
         end
     end
 
 end
 
-
 main()
-
 
 
 #=
