@@ -51,10 +51,13 @@ end
 function main()
     #A = [1.15, 1.5, 3.5]
     A = [1.13, 1.23, 3.0]
+    A_2 = [-3.5, -0.5, 16]
     J = [f1x f1y f1z; f2x f2y f2z; f3x f3y f3z]
     F = [f1 f2 f3]
-    R = newton_broyden(A, F, J, 0.00005, 10)
+    R = newton_broyden(A, F, J, 0.00005, 10, false)
     println(R)
+    R_2 = newton_broyden(A_2, F, J, 0.00005, 10, false)
+    println(R_2)
 end
 
 main()
