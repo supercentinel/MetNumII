@@ -206,9 +206,9 @@ function main()
         elseif opt == 2
             R = newton(x, F_2, J_2, tolerancia, iteraciones, false)
         elseif opt == 3
-            R = newton(X_2, F_3, J_3, tolerancia, iteraciones, false)
+            R_2 = newton(X_2, F_3, J_3, tolerancia, iteraciones, false)
         elseif opt == 4
-            R = newton(X_2, F_4, J_4, tolerancia, iteraciones, false)
+            R_2 = newton(X_2, F_4, J_4, tolerancia, iteraciones, false)
         end
 
         println("Calcular otra raiz? [y/n]")
@@ -221,33 +221,3 @@ function main()
 end
 
 main()
-
-
-#=
-function main()
-    A = [2.0, 3.0]
-    R = newton(A, F_1, J_1, 0.005, 10, false)
-    println(R)
-end
-
-
-
-main()
-=#
-#=
-function main()
-    A_1 = [1.0, 1.0, 2.0]
-    A_2 = [-1.25, -0.75, 2.0]
-
-    J = [f1dx f1dy f1dz; f2dx f2dy f2dz; f3cdx f3cdy f3cdz]
-    F = [f1d f2d f3cd]
-
-    R_1 = newton(A_1, F, J, 0.0005, 20, false)
-    println(R_1)
-    #println("")
-    #R_2 = newton(A_2, 0.0005, 10, false)
-    #println(R_2)
-end
-
-main()
-=#
