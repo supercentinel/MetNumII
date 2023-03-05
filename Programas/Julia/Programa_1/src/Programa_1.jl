@@ -174,7 +174,7 @@ module Programa_1
     J_4 = [f1dx f1dy f1dz; f2dx f2dy f2dz; f3cdx f3cdy f3cdz]
     F_4 = [f1d f2d f3cd]
 
-    function main()
+    function julia_main()
 
         opt::Int8 = 0
         X = zeros(Float64, 2, 1)
@@ -202,13 +202,17 @@ module Programa_1
                 println("Introduce el vector inical")
                 if opt <= 2
                     for i in 1:length(X)
-                        @printf("X[%d] = ", i)
+                        print("X[")
+                        print(i)
+                        println("] = ")
                         str = readline()
                         X[i] = parse(Float64, str)
                     end
                 else
                     for i in 1:length(X_2)
-                        @printf("X[%d] = ", i)
+                        print("X[")
+                        print(i)
+                        println("] = ")
                         str = readline()
                         X_2[i] = parse(Float64, str)
                     end

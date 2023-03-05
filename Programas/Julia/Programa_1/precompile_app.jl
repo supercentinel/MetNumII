@@ -1,3 +1,3 @@
 using Programa_1
 
-Programa_1.main()
+Programa_1.julia_main()

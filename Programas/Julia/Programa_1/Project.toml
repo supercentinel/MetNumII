@@ -1,0 +1,8 @@
+name = "Programa_1"
+uuid = "bd4c13dc-6891-4965-a4a1-17f02b75581d"
+authors = [
+    "Alan Ceron Chavez <318101602@pcpuma.acatlan.unam.mx>",
+    "Samuel Tadeo Ramirez Reyes <318128205@pcpuma.acatlan.unam.mx>",
+    "Alva Morlan Juan Ignacio <318005328@pcpuma.acatlan.unam.mx>",
+    "André Miranda Saldaña"]
+version = "0.1.0"

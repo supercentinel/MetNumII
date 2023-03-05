@@ -1,5 +1,3 @@
-using Printf
-
 function Error_a(A_k::Array{Float64}, A_km1::Array{Float64})
     ∑ = 0.0
 
@@ -50,14 +48,7 @@ function newton(A::Array{Float64}, F::Array{Function}, J::Array{Function}, toler
         end
 
         if TeX == true
-            @printf("|%d", k)
-            #Imprime X^k formateada a TeX(dice TeX pero más bien es para markdown y KaTeX)
-            @printf("|%c\\begin%cbmatrix%c%.10LF \\\\ %.10LF \\\\ %.10LF\\end%cbmatrix%c%c", 36, 123, 125, A_k[1], A_k[2], A_k[3], 123, 125, 36)
-            #Imprime J(X^k)
-            @printf("|%c\\begin%cbmatrix%c%.10LF & %.10LF & %.10LF \\\\ %.10LF & %.10LF & %.10LF \\\\ %.10LF & %.10LF & %.10LF \\end%cbmatrix%c%c", 36, 123, 125, J_xk_[1,1], J_xk_[1,2], J_xk_[1,3], J_xk_[2,1], J_xk_[2,2], J_xk_[2,3], J_xk_[3,1], J_xk_[3,2], J_xk_[3,3] , 123, 125, 36)
-            #Imprime F(X^)
-            @printf("|%c\\begin%cbmatrix%c%.10LF \\\\ %.10LF \\\\ %.10LF\\end%cbmatrix%c%c", 36, 123, 125, F_xk_[1], F_xk_[2], F_xk_[3], 123, 125, 36)
-            @printf("|%.10LF|\n", e_r)
+            println("")
         else
             print("k = ")
             println(k)
