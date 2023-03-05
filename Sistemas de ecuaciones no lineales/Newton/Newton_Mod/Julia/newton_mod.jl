@@ -1,30 +1,4 @@
 #using LinearAlgebra
-using Printf
-
-function f1(x::Float64, y::Float64, z::Float64)
-    return (x ^ 2) + y + (2 * (z ^ 2)) - 10.0
-end
-
-function f2(x::Float64, y::Float64, z::Float64)
-    return (5 * x) - (6 * y) + z
-end
-
-function f3(x::Float64, y::Float64, z::Float64)
-    return z - (x ^ 2) - (y ^ 2)
-end
-#con respecto a x
-function f1d(x::Float64, y::Float64, z::Float64)
-    return 2 * x
-end
-#con respecto a y
-function f2d(x::Float64, y::Float64, z::Float64)
-    return -6.0
-end
-#con respecto a z
-function f3d(x::Float64, y::Float64, z::Float64)
-    return 1.0
-end
-
 #En la libería estándar existe en LinearAlgebra la función norma que hace lo mismo. Meh.
 function norma(A::Array{Float64})
     ∑ = 0.0
@@ -36,14 +10,13 @@ function norma(A::Array{Float64})
     return √∑
 
 end
-
 #Usando despazamientos simultaneos
-function newton_mod(X::Array{Float64}, tolerancia::Float64, iteraciones::Int64)
+function newton_mod(X::Array{Float64}, F::Array{Function}, δF::Array{Function}, tolerancia::Float64, iteraciones::Int64)
 
-    X_km1 = X
-    X_k = X
-    F_X_k_ = [0.0, 0.0, 0.0]
-    δF_X_k_ = [0.0, 0.0, 0.0]
+    X_km1 = copy(X)
+    X_k = copy(X)
+    F_X_k_ = zeros(Float64, length(F), 1)
+    δF_X_k_ = zeros(Float64, length(F), 1)
     e_a = 1.0
     k = 0
 
@@ -52,18 +25,18 @@ function newton_mod(X::Array{Float64}, tolerancia::Float64, iteraciones::Int64)
 
     while true
 
-        X_km1 = X_k
+        X_km1 = copy(X_k)
 
-        F_X_k_[1] = f1(X_km1[1], X_km1[2], X_km1[3])
-        F_X_k_[2] = f2(X_km1[1], X_km1[2], X_km1[3])
-        F_X_k_[3] = f3(X_km1[1], X_km1[2], X_km1[3])
+        for i ∈ 1:length(F)
+            F_X_k_[i] = F[i](X_km1)
+        end
 
         print("F(X) = ")
         println(F_X_k_)
 
-        δF_X_k_[1] = f1d(X_km1[1], X_km1[2], X_km1[3])
-        δF_X_k_[2] = f2d(X_km1[1], X_km1[2], X_km1[3])
-        δF_X_k_[3] = f3d(X_km1[1], X_km1[2], X_km1[3])
+        for i ∈ 1:length(δF)
+            δF_X_k_[i] = δF[i](X_km1)
+        end
 
         print("δF(X) = ")
         println(δF_X_k_)
@@ -79,9 +52,9 @@ function newton_mod(X::Array{Float64}, tolerancia::Float64, iteraciones::Int64)
             break
         end
 
-        X_k[1] = X_km1[1] - ((F_X_k_[1])/(δF_X_k_[1]))
-        X_k[2] = X_km1[2] - ((F_X_k_[2])/(δF_X_k_[2]))
-        X_k[3] = X_km1[3] - ((F_X_k_[3])/(δF_X_k_[3]))
+        for i ∈ 1:length(X_k)
+            X_k[i] = X_km1[i] - ((F_X_k_[i])/(δF_X_k_[i]))
+        end
 
         print("K = ")
         println(k)
@@ -94,16 +67,3 @@ function newton_mod(X::Array{Float64}, tolerancia::Float64, iteraciones::Int64)
     return X_k
 
 end
-
-function main()
-    A = [1.0, 1.0, 2.0]
-    println(A)
-    R = newton_mod(A, 0.0005, 10)
-    println(R)
-    A_2 = [-1.75, -0.75, 2.0]
-    R_2 = newton_mod(A_2, 0.0005, 10)
-    println(R_2)
-end
-
-main()
-
