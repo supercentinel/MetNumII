@@ -1,57 +1,53 @@
-using Printf
+function distancia(X::Array{Float64}, X_2::Array{Float64})
+    ∑ = 0.0
 
-mutable struct Punto
-    x::Float64
-    y::Float64
+    if length(X) != length(X_2)
+        return 0.0
+    end
+
+    for i ∈ 1:length(X)
+        ∑ += (X[i] - X_2[i]) ^ 2
+    end
+
+    return √∑
 end
 
-function g_1(x::Float64, y::Float64)
-    return -(((x * x) - y - 2.0 - (4.0 * x))/(4.0));
-end
-
-function g_2(x::Float64, y::Float64)
-    return return -(((2.0 * x * y) - 3.0 - (5.0 * y))/(5.0));
-end
-
-function distancia(p_1::Punto, p_2::Punto)
-    return √(((p_1.x - p_2.x) ^ 2) + ((p_1.y - p_2.y) ^ 2))
-end
-
-function punto_fijo_sucesivo(x::Float64, y::Float64, tolerancia::Float64, iteraciones::Int64)
-    p = Punto(x, y)
-    pkm1 = Punto(0.0, 0.0)
+function punto_fijo_sucesivo(X::Array{Float64}, G::Array{Function}, tolerancia::Float64, iteraciones::Int64)
+    X_k = copy(X)
+    X_km1 = copy(X)
     k::UInt32 = 0.0
     e_a::Float64 = 1.0
 
-    @printf("|%-4s|%-24s|%-24s|%-24s|\n", "k", "x^k", "y^k", "E_a")
+    print("k = ")
+    println(k)
+    print("X = ")
+    println(X_k)
 
     while true
-        pkm1.x = p.x
-        pkm1.y = p.y
+        X_km1 = copy(X_k)
 
-        @printf("|%-4i|%-24.20LF|%-24.20LF|%-24.20LF|\n", k, p.x, p.y, e_a)
-
-        if k >= iteraciones 
-            break
-        end
-        if e_a <= tolerancia 
-            break
+        for i ∈ 1:length(G)
+            X_k[i] = G[i](X_k)
         end
 
-        p.x = g_1(p.x, p.y)
-        p.y = g_2(p.x, p.y)
+        e_a = distancia(X_k, X_km1)
 
-        e_a = distancia(p, pkm1)
-            
+        print("k = ")
+        println(k)
+        print("X = ")
+        println(X_k)
+        print("Error = ")
+        println(e_a)
+
+        if e_a <= tolerancia
+            break
+        end
+        if k >= iteraciones
+            break
+        end
+
         k += 1
     end
-    
-    return p
+
+    return X_k
 end
-
-
-function main()
-    p = punto_fijo_sucesivo(1.75, 1.0, 0.00008, 100)
-end
-
-main()
