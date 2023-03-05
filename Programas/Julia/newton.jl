@@ -33,6 +33,7 @@ function newton(A::Array{Float64}, F::Array{Function}, J::Array{Function}, toler
     F_xk_ = zeros(Float64, length(F), 1)
     e_r = 1.0
     k = 0
+    converge::Bool = false
 
     while true
 
@@ -71,6 +72,7 @@ function newton(A::Array{Float64}, F::Array{Function}, J::Array{Function}, toler
         end
 
         if e_r <= tolerancia
+            converge = true
             break
         end
         if k >= iteraciones
@@ -83,6 +85,20 @@ function newton(A::Array{Float64}, F::Array{Function}, J::Array{Function}, toler
 
         e_r = Error_a(A_k, A_km1)/Norma(A_k)
 
+    end
+
+    if converge == true
+        println()
+        println("Converge!")
+        println("Raíz en:")
+        display(A_k)
+        print("Con una error de: ")
+        print(e_r)
+        print(" y un total de ")
+        print(k)
+        println(" iteraciones")
+    else
+        println("El método no converge con los datos introducidos")
     end
 
     return A_k
