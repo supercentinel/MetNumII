@@ -150,11 +150,21 @@ function print_menu()
     println("Escoje uno de los sistemas de ecuaciones")
 end
 
+function clc()
+    if Sys.iswindows()
+        return read(run(`powershell cls`), String)
+    elseif Sys.isunix()
+        return read(run(`clear`), String)
+    elseif Sys.islinux()
+        return read(run(`printf "\033c"`), String)
+    end
+end
+
 J_1 = [f1ax f1ay; f2ax f2ay]
 F_1 = [f1a f2a]
 
 J_2 = [f1bx f1by; f2bx f2by]
-F_3 = [f1b f2b]
+F_2 = [f1b f2b]
 
 J_3 = [f1cx f1cy f1cz; f2cx f2cy f2cz; f3cdx f3cdy f3cdz]
 F_3 = [f1c f2c f3cd]
@@ -179,6 +189,7 @@ function main()
         opt = parse(Int8, str)
 
         if opt > 0 && opt < 5
+            clc()
             println("Introduce el vector inical")
             if opt <= 2
                 for i in 1:length(X)
@@ -204,11 +215,16 @@ function main()
         if opt == 1
             R = newton(X, F_1, J_1, tolerancia, iteraciones, false)
         elseif opt == 2
-            R = newton(x, F_2, J_2, tolerancia, iteraciones, false)
+            R = newton(X, F_2, J_2, tolerancia, iteraciones, false)
         elseif opt == 3
             R_2 = newton(X_2, F_3, J_3, tolerancia, iteraciones, false)
         elseif opt == 4
             R_2 = newton(X_2, F_4, J_4, tolerancia, iteraciones, false)
+        elseif opt == 5
+            println("Adios!")
+            break
+        else
+            continue
         end
 
         println("Calcular otra raiz? [y/n]")
@@ -216,8 +232,9 @@ function main()
         if cmp(str, "y") != 0
             break
         end
+        clc()
     end
-
+    clc()
 end
 
 main()
