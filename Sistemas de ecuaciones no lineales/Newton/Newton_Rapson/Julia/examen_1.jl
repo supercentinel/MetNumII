@@ -50,7 +50,7 @@ end
 
 function main()
 
-    A = [0.25, 0.18, 1]
+    A = [3.0, 2.0, 2.0]
     A_2 = [-0.25, 0.18, -1.1]
     F = [f1, f2, f3]
     J = [f1x f1y f1z; f2x f2y f2z; f3x f3y f3z]
@@ -58,8 +58,8 @@ function main()
     R = newton(A, F, J, 0.0005, 10, false)
     display(R)
 
-    R_2 = newton(A_2, F, J, 0.0005, 10, false)
-    display(R_2)
+    #R_2 = newton(A_2, F, J, 0.0005, 10, false)
+    #display(R_2)
 end
 
 main()

@@ -49,7 +49,16 @@ function f3z(X::Array{Float64})
 end
 
 function main()
+    A = [0.25, 0.18, 1]
+    A_2 = [-0.25, 0.18, -1.1]
 
+    F = [f1, f2, f3]
+    δF = [f1x, f2y, f3z]
+
+    R = newton_mod(A, F, δF, 0.0003, 15)
+    display(R)
+    R_2 = newton_mod(A_2, F, δF, 0.0003, 15)
+    display(R_2)
 end
 
-main
+main()

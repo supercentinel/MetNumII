@@ -25,16 +25,16 @@ function f3d(X::Array{Float64})
 end
 
 function main()
-    A = [1.0, 1.0, 2.0]
+    A = [1.0, 0.5, 1.0]
     F = [f1, f2, f3]
     δF = [f1d, f2d, f3d]
 
     R = newton_mod(A, F, δF, 0.0005, 10)
     display(R)
 
-    A_2 = [-1.75, -0.75, 2.0]
-    R_2 = newton_mod(A_2, F, δF, 0.0005, 10)
-    display(R_2)
+    #A_2 = [-1.75, -0.75, 2.0]
+    #R_2 = newton_mod(A_2, F, δF, 0.0005, 10)
+    #display(R_2)
 end
 
 main()
