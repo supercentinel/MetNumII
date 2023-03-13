@@ -22,7 +22,7 @@ function lagrange_n(puntos::Array{Punto}, est::Float64, grado::Int64)
     estimacion::Float64 = 0.0
     L::Float64 = 1.0
     ubik = 0
-    
+
     if grado > length(puntos)
         println("El grado maximo del polinomio es n siendo el tamaño del arreglo de puntos n+1")
         return 0.0
@@ -40,7 +40,7 @@ function lagrange_n(puntos::Array{Punto}, est::Float64, grado::Int64)
     for i ∈ 1:grado+1
         #println("i = ", i)
         L = 1.0
-        
+
         for j ∈ 1:grado
             #println("j = ",j)
             if i == j
@@ -54,7 +54,7 @@ function lagrange_n(puntos::Array{Punto}, est::Float64, grado::Int64)
                     println(est, " - ", puntos[grado+1].x)
                     println("-----------")
                     println(puntos[i].x, " - ", puntos[grado+1].x)
-                    
+
                 continue
             end
 
@@ -65,12 +65,28 @@ function lagrange_n(puntos::Array{Punto}, est::Float64, grado::Int64)
             L *= (est - puntos[j].x)/(puntos[i].x - puntos[j].x)
             #println(L)
         end
-        
+
         println(" * ", puntos[i].y)
         estimacion += L * puntos[i].y
     end
 
     return estimacion
+end
+
+function lagrange(puntos::Array{Punto}, est::Float64)
+    ∑ = 0.0
+
+    for k ∈ 1:length(puntos)
+        ∏ = 1.0
+        for j ∈ 1:length(puntos)
+            if k ≠ j
+                ∏ = ∏ * ((est - puntos[j].x)/(puntos[k].x - puntos[j].x))
+            end
+        end
+        ∑ += ∏ * puntos[k].y
+    end
+
+    return ∑
 end
 
 function main()
@@ -85,6 +101,9 @@ function main()
     puntos = [p_1, p_2]
 
     est = 2.5
+
+    r_tru = lagrange(puntos, est)
+    println("Usando la funcion de la clase", est, " ⭇ ", r_tru)
 
     r = lagrange_n(puntos, est, 1)
     println("Usando la función para n ", est, " ⭇ ", r)
