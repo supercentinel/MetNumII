@@ -11,5 +11,5 @@ $$
 Y qué es $L_{k.n}?$ Pues es el cociente de Lagrange que está dado por:
 
 $$
-L_{k,n}=\prod^n_{j=0 \\ j\neq k}=\frac{(x-x_j)}{(x_k-x_j)}
+L_{k,n}(x)=\prod^n_{j=0 \\ j\neq k}=\frac{(x-x_j)}{(x_k-x_j)}
 $$
