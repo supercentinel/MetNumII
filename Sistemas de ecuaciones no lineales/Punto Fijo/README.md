@@ -18,5 +18,5 @@ $$
 En esta variación del método al iterar podemos utilizar los valores de $x^{k+1}_{i-1}$ para la siguiente iteración.
 
 $$
-x^{k+1}_{2}(X)=(x^{k+1}_1,\ldots,x_n)
+x^{k+1}_{2}(X)=g_2(x^{k+1}_1,\ldots,x_n)
 $$
