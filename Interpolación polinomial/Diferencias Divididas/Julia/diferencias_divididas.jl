@@ -13,8 +13,8 @@ function diferecias_divididas(puntos::Array{Punto}, est::Float64, grado::Int64)
         dif_div[i, 2] = puntos[i].y
     end
 
-    for i ∈ axes(dif_div,2)[3:end]#3:size(dif_div, 2)
-        for j ∈ axes(dif_div, 1)[1:end-i+2]#1:size(dif_div, 1)-i+2
+    for i ∈ axes(dif_div,2)[(begin+2):end]#3:size(dif_div, 2)
+        for j ∈ axes(dif_div, 1)[begin:(end-i+2)]#1:size(dif_div, 1)-i+2
             dif_div[j,i] = (dif_div[j+1, i-1] - dif_div[j, i-1])/(dif_div[j+1+i-3, 1] - dif_div[j,1])
         end
     end
