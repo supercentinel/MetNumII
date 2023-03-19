@@ -4,18 +4,28 @@ a difrencia de las variaciones anteriores está si usa la matriz Jacobiana pero 
 
 ### Sherman Morrison
 
+Si $A$ es una matriz no singular y $X$ y $Y$ son vectores entonces:
+
 $$
-\text{Si }A\text{ es una matriz no singular y }X\space y\space Y\text{son vectores, entonces }A+XY^t \text{ es no singular siempre que}\newline
-Y^tA^{-1}X\neq-1 \\
-\text{Y su inversa está dada por:} \\
+A+XY^t\neq1
+$$
+
+Y su inversa está dada por :
+
+$$
+
 (A+XY^t)^{-1}=A^{-1}-\frac{A^{-1}XY^tA^{-1}}{1+Y^tA^{-1}X}
 $$
 
-Con este teorema podemos aproximar la inversa de la matriz Jacobiana de la siguiente manera
+Con este teorema podemos aproximar la inversa de la matriz Jacobiana de la siguiente manera:
 
 $$
 J^{(1)}\approx A^{(1)}=\frac{F(X^{(1)})-F(X^{(0)})}{X^{(1)}-X^{(0)}}\newline
-\text{Y la aproximación a su inversa}\newline
+$$
+
+Y su inversa esta dada por:
+
+$$
 {J^{(1)}}^{-1} \approx {A^{(1)}}^{-1}=\frac{X^{(1)}-X^{(0)}}{F(X^{(1)})-F(X^{(0)})}\newline
 $$
 
