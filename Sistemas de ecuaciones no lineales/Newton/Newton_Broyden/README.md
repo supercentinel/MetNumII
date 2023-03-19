@@ -6,8 +6,8 @@ a difrencia de las variaciones anteriores está si usa la matriz Jacobiana pero 
 
 $$
 \text{Si }A\text{ es una matriz no singular y }X\space y\space Y\text{son vectores, entonces }A+XY^t \text{ es no singular siempre que}\newline
-Y^tA^{-1}X\neq-1\newline
-\text{Y su inversa está dada por:}\newline
+Y^tA^{-1}X\neq-1 \\
+\text{Y su inversa está dada por:} \\
 (A+XY^t)^{-1}=A^{-1}-\frac{A^{-1}XY^tA^{-1}}{1+Y^tA^{-1}X}
 $$
 
