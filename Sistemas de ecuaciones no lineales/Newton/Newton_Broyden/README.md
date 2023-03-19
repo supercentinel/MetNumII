@@ -13,7 +13,6 @@ $$
 Y su inversa está dada por :
 
 $$
-
 (A+XY^t)^{-1}=A^{-1}-\frac{A^{-1}XY^tA^{-1}}{1+Y^tA^{-1}X}
 $$
 
