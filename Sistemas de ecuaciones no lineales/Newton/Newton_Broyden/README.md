@@ -20,6 +20,7 @@ J^{(1)}\approx A^{(1)}=\frac{F(X^{(1)})-F(X^{(0)})}{X^{(1)}-X^{(0)}}\newline
 $$
 
 Pero para obtener una primera iteración es necesaria la Jacobiana, que, después de la primera iteración será remplazada por ${A^{(k)}}^{-1}$ de la siguiente manera:
+
 $$
 A^{(k)}=A^{(k-1)}+\frac{(\Delta F^{(k)}-A^{(k-1)}\Delta X^{(k)}){(\Delta X^{(k)})^t}}{{||(\Delta X^{(k)})||}^2_2}
 $$
