@@ -9,50 +9,20 @@ typedef struct
     long double z;
 }Punto;
 
-long double f1(long double x, long double y, long double z)
-{
-    return (x * x) + y + (2.0 * (z * z)) - 10.0;
-}
-
-long double f2(long double x, long double y, long double z)
-{
-    return (5 * x) - (6 * y) + z;
-}
-
-long double f3(long double x, long double y, long double z)
-{
-    return z - (x * x) - (y * y);
-}
-//con respecto a x
-long double f1d(long double x, long double y, long double z)
-{
-    return 2.0 * x;
-}
-//con respecto a y
-long double f2d(long double x, long double y, long double z)
-{
-    return -6.0;
-}
-//con respecto a z
-long double f3d(long double x, long double y, long double z)
-{
-    return 1.0;
-}
-
-long double norma(Punto A)
+long double norma(Punto X)
 {
     long double s = 0.0;
 
-    s += (A.x * A.x);
-    s += (A.y * A.y);
-    s += (A.z * A.z);
+    s += (X.x * X.x);
+    s += (X.y * X.y);
+    s += (X.z * X.z);
 
     return sqrt(s);
 }
 
-Punto newton_mod(Punto A, long double tolerancia, int iteraciones)
-{
-    Punto X = A;
+Punto newton_mod(Punto X, long double (**F)(Punto X), long double (**F_d)(Punto X), long double tolerancia, int iteraciones)
+{ 
+    Punto X_k = X;
     Punto F_X_k, dF_X_k;
     long double e_a;
     int k = 0;
@@ -60,42 +30,29 @@ Punto newton_mod(Punto A, long double tolerancia, int iteraciones)
     while(1)
     {
 
-        F_X_k.x = f1(X.x, X.y, X.z);
-        F_X_k.y = f2(X.x, X.y, X.z);
-        F_X_k.z = f3(X.x, X.y, X.z);
+        F_X_k.x = F[0](X_k);
+        F_X_k.y = F[1](X_k);
+        F_X_k.z = F[2](X_k);
 
-        dF_X_k.x = f1d(X.x, X.y, X.z);
-        dF_X_k.y = f2d(X.x, X.y, X.z);
-        dF_X_k.z = f3d(X.x, X.y, X.z);
+        dF_X_k.x = F_d[0](X_k);
+        dF_X_k.y = F_d[1](X_k);
+        dF_X_k.z = F_d[2](X_k);
 
         e_a = norma(F_X_k);
 
-        printf("|%-4d|%-11.10LF|%11.10LF|%11.10LF|%-10.10LF|\n", k, X.x, F_X_k.x, dF_X_k.x, e_a);
-        printf("|    |%-11.10LF|%11.10LF|%11.10LF|\n", X.y, F_X_k.y, dF_X_k.y);
-        printf("|    |%-11.10LF|%11.10LF|%11.10LF|\n\n", X.z, F_X_k.z, dF_X_k.z);
+        printf("|%-4d|%-11.10LF|%11.10LF|%11.10LF|%-10.10LF|\n", k, X_k.x, F_X_k.x, dF_X_k.x, e_a);
+        printf("|    |%-11.10LF|%11.10LF|%11.10LF|\n", X_k.y, F_X_k.y, dF_X_k.y);
+        printf("|    |%-11.10LF|%11.10LF|%11.10LF|\n\n", X_k.z, F_X_k.z, dF_X_k.z);
 
         if (e_a <= tolerancia) break;
         if (k >= iteraciones) break;
 
-        X.x = X.x - ((F_X_k.x)/(dF_X_k.x));
-        X.y = X.y - ((F_X_k.y)/(dF_X_k.y));
-        X.z = X.z - ((F_X_k.z)/(dF_X_k.z));
+        X_k.x = X_k.x - ((F_X_k.x)/(dF_X_k.x));
+        X_k.y = X_k.y - ((F_X_k.y)/(dF_X_k.y));
+        X_k.z = X_k.z - ((F_X_k.z)/(dF_X_k.z));
 
         k++;
     }
 
-    return X;
-}
-
-int main()
-{
-    Punto X, R;
-
-    X.x = 1.0;
-    X.y = 1.0;
-    X.z = 2.0;
-
-    R = newton_mod(X, 0.5, 10);
-
-    return 0;
+    return X_k;
 }
