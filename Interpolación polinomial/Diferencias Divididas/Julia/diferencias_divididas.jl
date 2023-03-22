@@ -23,12 +23,13 @@ function diferecias_divididas(puntos::Array{Punto}, est::Float64, grado::Int64)
         ∏c = 1.0
         for j ∈ 1:grado-i+1
             ∏c *= (est - dif_div[j,1])
-            println("(", est," - ",dif_div[j,1],")")
+            print("(x" ," - ",dif_div[j,1],")")
         end
 
         estimacion += dif_div[1, grado-i+3] * ∏c
-        println(dif_div[1,grado-i+3], " * ", ∏c, " = ", dif_div[1,grado-i+3]*∏c)
+        print("* ", dif_div[1,grado-i+3], " + ")
+        #println(dif_div[1,grado-i+3], " * ", ∏c, " = ", dif_div[1,grado-i+3]*∏c)
     end
-    #display(dif_div)
+    display(dif_div)
     return estimacion
 end
