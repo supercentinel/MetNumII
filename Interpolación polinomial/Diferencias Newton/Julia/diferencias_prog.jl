@@ -6,7 +6,12 @@ end
 function diferencias_newton(puntos::Array{Punto}, est::Float64, grado::Int64)
     dif_tab = zeros(Float64, length(puntos), length(puntos)+1)
     estimacion::Float64 = 0.0
+    h::Float64 = puntos[2].x - puntos[1].x
+    h = abs(round(h,digits=5))
+    s = ((est - puntos[1].x)/(h))
+    s = round(s, digits=5)
     ∏s::Float64 = 1.0
+    ∑p::Float64 = 0.0
 
      for i ∈ axes(dif_tab,1)
         dif_tab[i,1] = puntos[i].x
@@ -21,10 +26,23 @@ function diferencias_newton(puntos::Array{Punto}, est::Float64, grado::Int64)
 
     display(dif_tab)
 
-    for i ∈ grado+1
-        ∏s = 1.0
-        for j ∈ grado-i+1
-            ∏s = ()
+    
+    for i ∈ 1:grado+1
+        ∏s = s
+        for j ∈ 1:grado-i
+            ∏s *= (s - j)
+            println("(s- ", j, ")") 
+        end
+        if i != grado+1
+            ∑p += round(∏s, digits=6) * ((round(dif_tab[1, grado-i+3], digits=6))/(factorial(grado-i+1)))
+            println(∏s, " * ", dif_tab[1, grado-i+3], "/ ", grado-i+1, "!")
+        else
+            ∑p += round(dif_tab[1, grado-i+3], digits=6)
+        end
+        
+    end
+    
+    estimacion = ∑p
 
     return estimacion
 end
@@ -38,9 +56,10 @@ function main()
     p_4 = Punto(2.2, 0.110362)
 
     puntos = [p_0, p_1, p_2, p_3, p_4]
-    est = 2.2
+    est = 1.1
 
     r = diferencias_newton(puntos, est, 4)
+    println(r)
 end
 
 main()
