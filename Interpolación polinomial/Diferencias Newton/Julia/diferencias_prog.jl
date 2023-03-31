@@ -28,12 +28,16 @@ function diferencias_newton(puntos::Array{Punto}, est::Float64, grado::Int64)
 
     for i ∈ 1:grado+1
         ∏s = s
-        print("s")
+        if i ≠ grado+1
+            print("s")
+        end
         for j ∈ 1:grado-i
             ∏s *= (s - j)
             print("(s-", j, ")") 
         end
-        print(" * ")
+        if i ≠ grado+1
+            print(" * ")
+        end
         if i != grado+1
             ∑p += round(∏s, digits=6) * ((round(dif_tab[1, grado-i+3], digits=6))/(factorial(grado-i+1)))
             print(dif_tab[1, grado-i+3], "/ ", grado-i+1, "! + ")
