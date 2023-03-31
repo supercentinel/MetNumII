@@ -3,7 +3,7 @@ struct Punto
     y::Float64
 end
 
-function diferencias_newton(puntos::Array{Punto}, est::Float64, grado::Int64)
+function diferencias_newton_prog(puntos::Array{Punto}, est::Float64, grado::Int64)
     dif_tab = zeros(Float64, length(puntos), length(puntos)+1)
     estimacion::Float64 = 0.0
     h::Float64 = puntos[2].x - puntos[1].x
