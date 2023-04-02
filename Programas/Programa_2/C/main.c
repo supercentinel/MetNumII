@@ -53,7 +53,8 @@ int main(void)
 {
     char cs = 'n';
     int i,os = 0;
-    int n_puntos = 0;
+    int n_puntos, grado = 0;
+    long double est = 0.0;
     Punto *puntos;
 
     #ifdef __linux__
@@ -86,13 +87,29 @@ int main(void)
 
     bbSortPuntos(puntos, n_puntos);
 
-    pritnf("Los puntos han sido reacomodados");
+    printf("Los puntos han sido reacomodados\n");
     for(i=0; i<n_puntos; i++)
     {
         printf("punto[%d] x = %LF y = %LF\n", i, puntos[i].x, puntos[i].y);
     }
 
+    do{
+        printf("Introduce el punto a aproximar por diferencias divididas\n");
+        fflush(stdin);
+        scanf("%LF", &est);
 
+        if(est > puntos[0].x || est < puntos[n_puntos-1].x) break;
+
+        printf("El punto no esta dentro del intervalo[x_o, x_n ]");
+    }while((est < puntos[0].x) || (est > puntos[n_puntos-1].x));
+
+
+    os == 1 ? system("clear") : system("cls");
+
+    while(grado+1>n_puntos)
+    {
+
+    }
 
     free(puntos);
     return 0;
