@@ -4,6 +4,24 @@
 #include "matriz.h"
 #include "diferencias_divididas.h"
 
+void bbSortPuntos(Punto *puntos, int n_puntos)
+{
+    int i,j = 0;
+    Punto temp;
+
+    for(i=0; i<n_puntos; i++)
+    {
+        for(j=0; j<n_puntos-1; j++)
+        {
+            if(puntos[j].x > puntos[j+1].x)
+            {
+                temp = puntos[j];
+                puntos[j] = puntos[j+1];
+                puntos[j+1] = temp;
+            }
+        }
+    }
+}
 
 Punto * lecturaPuntos(int *n_puntos)
 {
@@ -63,6 +81,17 @@ int main(void)
         free(puntos);
         os == 1 ? system("clear") : system("cls");
     }
+
+    os == 1 ? system("clear") : system("cls");
+
+    bbSortPuntos(puntos, n_puntos);
+
+    pritnf("Los puntos han sido reacomodados");
+    for(i=0; i<n_puntos; i++)
+    {
+        printf("punto[%d] x = %LF y = %LF\n", i, puntos[i].x, puntos[i].y);
+    }
+
 
 
     free(puntos);
