@@ -33,24 +33,36 @@ Punto * lecturaPuntos(int *n_puntos)
 
 int main(void)
 {
-
-    int i = 0;
+    char cs = 'n';
+    int i,os = 0;
     int n_puntos = 0;
     Punto *puntos;
 
-    puntos = lecturaPuntos(&n_puntos);
-
     #ifdef __linux__
-        system("clear");
+        os = 1;
     #else
-        system("cls");
+        os = 0;
     #endif
 
-    for(i=0; i<n_puntos; i++)
+    while(cs != 'y')
     {
-        printf("punto[%d] x = %LF y = %LF\n", i, puntos[i].x, puntos[i].y);
-    }
+        puntos = lecturaPuntos(&n_puntos);
 
+        for(i=0; i<n_puntos; i++)
+        {
+            printf("punto[%d] x = %LF y = %LF\n", i, puntos[i].x, puntos[i].y);
+        }
+
+        printf("Los datos son correctos?[y/n]\n");
+        fflush(stdin);
+        scanf(" %c", &cs);
+
+
+        if(cs == 'y') break;
+
+        free(puntos);
+        os == 1 ? system("clear") : system("cls");
+    }
 
 
     free(puntos);
