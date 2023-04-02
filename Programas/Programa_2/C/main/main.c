@@ -54,7 +54,7 @@ int main(void)
     char cs = 'n';
     int i,os = 0;
     int n_puntos, grado = 0;
-    long double est = 0.0;
+    long double est, f_est = 0.0;
     Punto *puntos;
 
     #ifdef __linux__
@@ -75,7 +75,7 @@ int main(void)
         printf("Los datos son correctos?[y/n]\n");
         fflush(stdin);
         scanf(" %c", &cs);
-
+        printf("\n%c\n", cs);
 
         if(cs == 'y') break;
 
@@ -93,23 +93,83 @@ int main(void)
         printf("punto[%d] x = %LF y = %LF\n", i, puntos[i].x, puntos[i].y);
     }
 
-    do{
+    do
+    {
         printf("Introduce el punto a aproximar por diferencias divididas\n");
         fflush(stdin);
         scanf("%LF", &est);
 
-        if(est > puntos[0].x || est < puntos[n_puntos-1].x) break;
+        if(est > puntos[0].x && est < puntos[n_puntos-1].x) break;
 
-        printf("El punto no esta dentro del intervalo[x_o, x_n ]");
+        printf("El punto no esta dentro del intervalo[x_o, x_n]\n");
     }while((est < puntos[0].x) || (est > puntos[n_puntos-1].x));
 
 
     os == 1 ? system("clear") : system("cls");
 
-    while(grado+1>n_puntos)
-    {
 
-    }
+    do
+    {
+        printf("Introduce el grado de polinomio a estimar\n");
+        fflush(stdin);
+        scanf("%d", &grado);
+
+        if(grado<n_puntos) break;
+
+        printf("El grado del polinomio es mayor a puntos-1\n");
+    }while(grado+1>n_puntos);
+
+
+    os == 1 ? system("clear") : system("cls");
+
+    f_est = diferenciasDivididas(puntos, n_puntos, est, grado);
+
+    printf("Estimacion de %LF con polinomio de grado %d\n%LF\n", est, grado, f_est);
+
+    printf("Hacer otra estimacion con los mismos puntos?[y/n]");
+    fflush(stdin);
+    scanf(" %c", &cs);
+
+    do
+    {
+        os == 1 ? system("clear") : system("cls");
+
+        do
+        {
+            printf("Introduce el punto a aproximar por diferencias divididas\n");
+            fflush(stdin);
+            scanf("%LF", &est);
+
+            if(est > puntos[0].x && est < puntos[n_puntos-1].x) break;
+
+            printf("El punto no esta dentro del intervalo[x_o, x_n]\n");
+        }while((est < puntos[0].x) || (est > puntos[n_puntos-1].x));
+
+
+        os == 1 ? system("clear") : system("cls");
+
+
+        do
+        {
+            printf("Introduce el grado de polinomio a estimar\n");
+            fflush(stdin);
+            scanf("%d", &grado);
+
+            if(grado<n_puntos) break;
+
+            printf("El grado del polinomio es mayor a puntos-1\n");
+        }while(grado+1>n_puntos);
+
+
+        os == 1 ? system("clear") : system("cls");
+
+        f_est = diferenciasDivididas(puntos, n_puntos, est, grado);
+
+        printf("Estimacion de %LF con polinomio de grado %d\n%LF\n", est, grado, f_est);
+        printf("Hacer otra estimacion con los mismos puntos?[y/n]");
+        fflush(stdin);
+        scanf(" %c", &cs);
+    }while(cs == 'y');
 
     free(puntos);
     return 0;

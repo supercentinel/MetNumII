@@ -14,7 +14,7 @@ Punto crearPunto(long double x, long double y)
 
     _punto.x = x;
     _punto.y = y;
-    
+
     return _punto;
 }
 
@@ -26,7 +26,7 @@ void printDifDiv(Matriz difDiv, int grado)
 
     for(i=0; i<grado; i++)
     {
-        printf("%7s[%d]%8c|", "f", i, '\0');        
+        printf("%7s[%d]%8c|", "f", i, '\0');
     }
 
     printf("\n");
@@ -61,12 +61,12 @@ long double diferenciasDivididas(Punto *puntos, int n_puntos, long double estima
     {
         for(j=0; j<dif_div.m-i+1; j++)
         {
-            dif_div.a[j][i] = ((dif_div.a[j+1][i-1] - dif_div.a[j][i-1])/(dif_div.a[j+i-1][0] - dif_div.a[j][0])); 
+            dif_div.a[j][i] = ((dif_div.a[j+1][i-1] - dif_div.a[j][i-1])/(dif_div.a[j+i-1][0] - dif_div.a[j][0]));
         }
     }
 
     printf("tabla de diferencias dividas:\n");
-    printDifDiv(dif_div, grado);    
+    printDifDiv(dif_div, grado);
 
     printf("polinomio de diferencias divididas:\n");
     //construyendo el polinomio
@@ -83,7 +83,7 @@ long double diferenciasDivididas(Punto *puntos, int n_puntos, long double estima
 
         if(i == grado)
         {
-            printf("%LF", dif_div.a[0][grado-i+1]);
+            printf("%LF\n", dif_div.a[0][grado-i+1]);
             continue;
         }
 
