@@ -51,7 +51,7 @@ Punto * lecturaPuntos(int *n_puntos)
 
 int main(void)
 {
-    char cs, mcs, mcs2 = 'n';
+    char cs, mcs, mcs2, dummy = 'n';
     int i,os = 0;
     int n_puntos, grado = 0;
     long double est, f_est = 0.0;
@@ -62,6 +62,16 @@ int main(void)
     #else
         os = 0;
     #endif
+
+    printf("Metodos numericos II\n");
+    printf("Integrantes:\n");
+    printf("Alan Ceron Chavez\n");
+    printf("Samuel Tadeo Ramirez Reyes\n");
+    printf("Andre Miranda Saldana\n");
+    printf("Alva Morlan Juab Ignacoip\n");
+
+    printf("\nIntroduce una tecla para continuar\n");
+    scanf(" %c", &dummy);
 
     do
     {
