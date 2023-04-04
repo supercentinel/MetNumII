@@ -20,10 +20,10 @@ function diferencias_newton_prog(puntos::Array{Punto}, est::Float64, grado::Int6
 
     for i ∈ axes(dif_tab,2)[(begin+2):end]
         for j ∈ axes(dif_tab, 1)[begin:(end-i+2)]
-            dif_tab[j,i] = (dif_tab[j+1, i-1] - dif_tab[j, i-1])
+            dif_tab[j,i] = round(dif_tab[j+1, i-1] - dif_tab[j, i-1], digits=6)
         end
     end
-    
+
     display(dif_tab)
 
     for i ∈ 1:grado+1
@@ -33,7 +33,7 @@ function diferencias_newton_prog(puntos::Array{Punto}, est::Float64, grado::Int6
         end
         for j ∈ 1:grado-i
             ∏s *= (s - j)
-            print("(s-", j, ")") 
+            print("(s-", j, ")")
         end
         if i ≠ grado+1
             print(" * ")
@@ -45,9 +45,9 @@ function diferencias_newton_prog(puntos::Array{Punto}, est::Float64, grado::Int6
             print(dif_tab[1, grado-i+3])
             ∑p += round(dif_tab[1, grado-i+3], digits=6)
         end
-        
+
     end
-    
+
     estimacion = ∑p
 
     return estimacion
