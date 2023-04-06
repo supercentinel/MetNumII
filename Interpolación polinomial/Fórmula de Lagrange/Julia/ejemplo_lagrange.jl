@@ -7,11 +7,11 @@ function main()
     p_3 = Punto(5.22, 2.4)
     p_4 = Punto(8.26, -1.7)
 
-    puntos = [p_1, p_2]
+    puntos = [p_0, p_1, p_2, p_3, p_4]
 
-    est = 2.5
+    est = 1.75
 
-    r = lagrange(puntos, est)
+    r = lagrange(puntos, est, 2, true)
     println("f(", est, ") ≈ ", r)
 end
 
