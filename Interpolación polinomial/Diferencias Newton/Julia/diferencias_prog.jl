@@ -3,7 +3,7 @@ struct Punto
     y::Float64
 end
 
-function diferencias_newton_prog(puntos::Array{Punto}, est::Float64, grado::Int64)
+function diferencias_newton_prog(puntos::Array{Punto}, est::Float64, grado::Int64, outprint::Bool)
     dif_tab = zeros(Float64, length(puntos), length(puntos)+1)
     estimacion::Float64 = 0.0
     h::Float64 = puntos[2].x - puntos[1].x
@@ -24,25 +24,41 @@ function diferencias_newton_prog(puntos::Array{Punto}, est::Float64, grado::Int6
         end
     end
 
-    display(dif_tab)
+    if outprint == true
+        println("Tabla de diferencias")
+        display(dif_tab)
+        println("Polinomio de Newton P_", grado, "(x)")
+    end
+
 
     for i ∈ 1:grado+1
         ∏s = s
         if i ≠ grado+1
-            print("s")
+            if outprint == true
+                print("s")
+            end
         end
         for j ∈ 1:grado-i
             ∏s *= (s - j)
-            print("(s-", j, ")")
+            if outprint == true
+                print("(s-", j, ")")
+            end
         end
         if i ≠ grado+1
-            print(" * ")
+            if outprint == true
+                print(" * ")
+            end
         end
         if i != grado+1
             ∑p += round(∏s, digits=6) * ((round(dif_tab[1, grado-i+3], digits=6))/(factorial(grado-i+1)))
-            print(dif_tab[1, grado-i+3], "/ ", grado-i+1, "! + ")
+            if outprint == true
+                println(dif_tab[1, grado-i+3], "/ ", grado-i+1, "! + ")
+            end
         else
-            print(dif_tab[1, grado-i+3])
+            if outprint == true
+                println(dif_tab[1, grado-i+3])
+            end
+
             ∑p += round(dif_tab[1, grado-i+3], digits=6)
         end
 

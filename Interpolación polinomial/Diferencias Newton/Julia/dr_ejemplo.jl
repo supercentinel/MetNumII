@@ -12,11 +12,11 @@ function main()
     puntos = [p_0, p_1, p_2, p_3, p_4, p_5]
     est = 96.0
 
-    P_2 = diferencias_newton_reg(puntos, est, 2)
+    P_2 = diferencias_newton_reg(puntos, est, 2, true)
     println()
     println(P_2)
-    
-    P_3 = diferencias_newton_reg(puntos, est, 3)
+
+    P_3 = diferencias_newton_reg(puntos, est, 3, true)
     println()
     println(P_3)
 end
