@@ -15,7 +15,7 @@ function main()
 
     puntos = [p_1, p_2, p_3, p_4, p_5, p_7, p_8, p_9]
 
-    r = diferecias_divididas(puntos, 7.0, 7)
+    r = diferecias_divididas(puntos, 7.0, 7, true)
     println(r)
 end
 
