@@ -6,9 +6,10 @@ end
 function Spline_C(puntos::Array{Punto})
     distancias = zeros(Float64, length(puntos)-1, 1)
     dif_div = zeros(Float64, length(puntos)-1, 1)
-    sEq = zeros(Float64, length(puntos)-2, length(puntos))
-    ssEq = zeros(Float64, length(puntos)-2, 1)
-    S = zeros(Float64, length(puntos)-2, 1)
+    A = zeros(Float64, length(puntos)-2, length(puntos))
+    nu_A = zeros(Float64, 3, 3)
+    B = zeros(Float64, length(puntos)-2, 1)
+    #S = zeros(Float64, length(puntos)-2, 1)
     a = zeros(Float64, length(puntos)-1, 1)
     b = zeros(Float64, length(puntos)-1, 1)
     c = zeros(Float64, length(puntos)-1, 1)
@@ -18,7 +19,52 @@ function Spline_C(puntos::Array{Punto})
         dif_div[i] = (puntos[i+1].y - puntos[i].y)/(distancias[i])
     end
 
-    display(sEq)
+    #filling A
+    for i ∈ axes(A, 1)
+        k = 1
+        for j ∈ axes(A, 2)[begin+i-1:length(puntos)-2+i-1]
+            if k == 1
+                A[i,j] = distancias[i]
+            elseif k == 2
+                A[i,j] = 2 * (distancias[i] + distancias[i+1])
+                println(distancias[i], " + ", distancias[i+1])
+            elseif k == 3
+                A[i,j] = distancias[i+1]
+            end
+            k += 1
+        end
+    end
+
+    #filling B 
+    for i ∈ axes(B,1)
+        B[i] = 6 * (dif_div[i+1] - dif_div[i])
+    end
+
+    for i ∈ axes(nu_A, 1)
+        for j ∈ axes(nu_A, 2)
+            nu_A[i,j] = A[i,j+1]
+        end
+    end
+
+    S = inv(nu_A) * B
+    #refactor this shit
+    for i ∈ axes(a, 1)
+        if i == 1
+            a[i] = (S[i+1] - 0)/(6 * distancias[i])
+            b[i] = 0/2
+            c[i] = dif_div[i+1] - (((S[i+1] + (2 * 0))/(6)) * distancias[i])
+        elseif i == 4
+            a[i] = (0 - S[i])/(6 * distancias[i])
+            b[i] = S[i]/2
+            c[i] = dif_div[i+1] - (((0 + (2 * S[i]))/(6)) * distancias[i])
+        else
+            a[i] = (S[i+1] - S[i])/(6 * distancias[i])
+            b[i] = S[i]/2
+            c[i] = dif_div[i+1] - (((S[i+1] + (2 * S[i]))/(6)) * distancias[i])
+        end
+    end
+    
+    display(a)
 end
 
 
