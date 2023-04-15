@@ -1,12 +1,6 @@
-using Plots
-
 struct Punto
     x::Float64
     y::Float64
-end
-
-function f_1(x::Float64)
-    -1.8746805051718043 * (x - 0.95)^3 + 0.0 * (x - 0.95)^2 + 2.896965875756782 * (x - 0.95)  + -1.1
 end
 
 function Spline_C(puntos::Array{Punto})
@@ -73,24 +67,11 @@ function Spline_C(puntos::Array{Punto})
 
     #printing the polynomials
     for i ∈ axes(a, 1)
-        println(a[i], "(x - ", puntos[i].x, ")^3 + ", b[i], "(x - ", puntos[i].x, ")^2 + ", c[i] ,"(x - ", puntos[i].x, ")  + ", puntos[i].y, ", ", puntos[i].x, " ≤ x ≤ ", puntos[i+1].x)
+        println(a[i], "(x - ", puntos[i].x, ")^3 + ",
+                b[i], "(x - ", puntos[i].x, ")^2 + ",
+                c[i] ,"(x - ", puntos[i].x, ")  + ",
+                puntos[i].y,", ",
+                puntos[i].x," ≤ x ≤ ", puntos[i+1].x)
     end
 end
 
-
-function main()
-
-    p_0 = Punto(0.95, -1.1)
-    p_1 = Punto(1.73, 0.27)
-    p_2 = Punto(2.23, -0.29)
-    p_3 = Punto(2.77, 0.56)
-    p_4 = Punto(2.99, 1.0)
-    #p_5 = Punto(3.33, 0.7)
-
-    puntos = [p_0, p_1, p_2, p_3, p_4#=, p_5=#]
-
-    Spline_C(puntos)
-
-end
-
-main()
