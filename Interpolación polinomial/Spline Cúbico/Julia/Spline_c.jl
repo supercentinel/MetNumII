@@ -13,7 +13,7 @@ function Spline_C(puntos::Array{Punto})
     distancias = zeros(Float64, length(puntos)-1, 1)
     dif_div = zeros(Float64, length(puntos)-1, 1)
     A = zeros(Float64, length(puntos)-2, length(puntos))
-    nu_A = zeros(Float64, 3, 3)
+    nu_A = zeros(Float64, length(puntos)-2, length(puntos)-2)
     B = zeros(Float64, length(puntos)-2, 1)
     a = zeros(Float64, length(puntos)-1, 1)
     b = zeros(Float64, length(puntos)-1, 1)
@@ -28,7 +28,7 @@ function Spline_C(puntos::Array{Punto})
     #filling A
     for i ∈ axes(A, 1)
         k = 1
-        for j ∈ axes(A, 2)[begin+i-1:length(puntos)-2+i-1]
+        for j ∈ axes(A, 2)[begin+i-1:end]
             if k == 1
                 A[i,j] = distancias[i]
             elseif k == 2
@@ -75,12 +75,6 @@ function Spline_C(puntos::Array{Punto})
     for i ∈ axes(a, 1)
         println(a[i], "(x - ", puntos[i].x, ")^3 + ", b[i], "(x - ", puntos[i].x, ")^2 + ", c[i] ,"(x - ", puntos[i].x, ")  + ", puntos[i].y, ", ", puntos[i].x, " ≤ x ≤ ", puntos[i+1].x)
     end
-
-    println(f_1(0.95))
-
-
-    plot(f_1, puntos[1].x, puntos[2].x)
-
 end
 
 
@@ -91,8 +85,9 @@ function main()
     p_2 = Punto(2.23, -0.29)
     p_3 = Punto(2.77, 0.56)
     p_4 = Punto(2.99, 1.0)
+    #p_5 = Punto(3.33, 0.7)
 
-    puntos = [p_0, p_1, p_2, p_3, p_4]
+    puntos = [p_0, p_1, p_2, p_3, p_4#=, p_5=#]
 
     Spline_C(puntos)
 
