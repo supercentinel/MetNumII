@@ -68,3 +68,6 @@ Cargo.lock
 
 # Hidden folders
 .*/
+
+#images
+*.png
