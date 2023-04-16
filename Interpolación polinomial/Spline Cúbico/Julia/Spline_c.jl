@@ -5,7 +5,12 @@ struct Punto
     y::Float64
 end
 
-function Spline_C(puntos::Array{Punto})
+function fcnFromString(s)
+    f = eval(Meta.parse("x -> " * s))
+    return x -> Base.invokelatest(f, x)
+end
+
+function Spline_C(puntos::Array{Punto}, outprint::Bool)
     distancias = zeros(Float64, length(puntos)-1, 1)
     dif_div = zeros(Float64, length(puntos)-1, 1)
     A = zeros(Float64, length(puntos)-2, length(puntos))
@@ -15,6 +20,7 @@ function Spline_C(puntos::Array{Punto})
     b = zeros(Float64, length(puntos)-1, 1)
     c = zeros(Float64, length(puntos)-1, 1)
     fn = Array{String}(undef, length(puntos)-1)
+    g = Array{Function}(undef, length(puntos)-1)
 
     #filling distancias
     for i ∈ axes(distancias,1)
@@ -70,13 +76,16 @@ function Spline_C(puntos::Array{Punto})
 
     #printing the polynomials
     for i ∈ axes(a, 1)
-        println(a[i], "(x - ", puntos[i].x, ")^3 + ",
-                b[i], "(x - ", puntos[i].x, ")^2 + ",
-                c[i] ,"(x - ", puntos[i].x, ")  + ",
-                puntos[i].y,", ",
-                puntos[i].x," ≤ x ≤ ", puntos[i+1].x)
+            if outprint == true
+            println(a[i], "(x - ", puntos[i].x, ")^3 + ",
+                    b[i], "(x - ", puntos[i].x, ")^2 + ",
+                    c[i] ,"(x - ", puntos[i].x, ")  + ",
+                    puntos[i].y,", ",
+                    puntos[i].x," ≤ x ≤ ", puntos[i+1].x)
+            end
         fn[i] = @sprintf("%LF * (x - %LF)^3 + %LF * (x - %LF)^2 + %LF * (x - %LF) + %LF", a[i], puntos[i].x, b[i], puntos[i].x, c[i], puntos[i].x, puntos[i].y)
+        g[i] = fcnFromString(fn[i])
     end
 
-    return fn
+    return g
 end
