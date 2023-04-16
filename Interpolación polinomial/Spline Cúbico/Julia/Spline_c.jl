@@ -1,3 +1,5 @@
+using Printf
+
 struct Punto
     x::Float64
     y::Float64
@@ -12,6 +14,7 @@ function Spline_C(puntos::Array{Punto})
     a = zeros(Float64, length(puntos)-1, 1)
     b = zeros(Float64, length(puntos)-1, 1)
     c = zeros(Float64, length(puntos)-1, 1)
+    fn = Array{String}(undef, length(puntos)-1)
 
     #filling distancias
     for i ∈ axes(distancias,1)
@@ -72,6 +75,8 @@ function Spline_C(puntos::Array{Punto})
                 c[i] ,"(x - ", puntos[i].x, ")  + ",
                 puntos[i].y,", ",
                 puntos[i].x," ≤ x ≤ ", puntos[i+1].x)
+        fn[i] = @sprintf("%LF * (x - %LF)^3 + %LF * (x - %LF)^2 + %LF * (x - %LF) + %LF", a[i], puntos[i].x, b[i], puntos[i].x, c[i], puntos[i].x, puntos[i].y)
     end
-end
 
+    return fn
+end
