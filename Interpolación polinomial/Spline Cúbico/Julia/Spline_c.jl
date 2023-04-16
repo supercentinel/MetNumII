@@ -11,16 +11,18 @@ function fcnFromString(s)
 end
 
 function Spline_C(puntos::Array{Punto}, outprint::Bool)
-    distancias = zeros(Float64, length(puntos)-1, 1)
-    dif_div = zeros(Float64, length(puntos)-1, 1)
-    A = zeros(Float64, length(puntos)-2, length(puntos))
-    nu_A = zeros(Float64, length(puntos)-2, length(puntos)-2)
-    B = zeros(Float64, length(puntos)-2, 1)
-    a = zeros(Float64, length(puntos)-1, 1)
-    b = zeros(Float64, length(puntos)-1, 1)
-    c = zeros(Float64, length(puntos)-1, 1)
-    fn = Array{String}(undef, length(puntos)-1)
-    g = Array{Function}(undef, length(puntos)-1)
+    n = length(puntos)
+
+    distancias = zeros(Float64, n-1, 1)
+    dif_div = zeros(Float64, n-1, 1)
+    A = zeros(Float64, n-2, n)
+    nu_A = zeros(Float64, n-2, n-2)
+    B = zeros(Float64, n-2, 1)
+    a = zeros(Float64, n-1, 1)
+    b = zeros(Float64, n-1, 1)
+    c = zeros(Float64, n-1, 1)
+    fn = Array{String}(undef, n-1)
+    g = Array{Function}(undef, n-1)
 
     #filling distancias
     for i ∈ axes(distancias,1)
@@ -57,7 +59,7 @@ function Spline_C(puntos::Array{Punto}, outprint::Bool)
 
     S = inv(nu_A) * B
 
-    #works for now
+    #definitely, it works
     for i ∈ axes(a, 1)
         if i == 1
             a[i] = (S[i] - 0)/(6 * distancias[i])
