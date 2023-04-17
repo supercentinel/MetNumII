@@ -3,35 +3,36 @@ struct Punto
     y::Float64
 end
 
-function min_cuadrados(puntos::Array{Puntos})
+function min_cuadrados(puntos::Array{Punto}, grado::Int64)
     m = length(puntos)
-    A = zeros(Float64, 2, 2)
-    B = zeros(Float64, 2, 1)
-    C = zeros(Float64, 2, 1)
+    n = grado+1
+    A = zeros(Float64, n, n)
+    B = zeros(Float64, n, 1)
+    C = zeros(Float64, n, 1)
     ∑x = 0.0
-    ∑x2 = 0.0
     ∑y = 0.0
-    ∑xy = 0.0
 
-    A[1,1] = m
-
-    for i ∈ axes(puntos, 1)
-        ∑x += puntos[i].x
-        ∑x2 += puntos[i].x^2
-        ∑y += puntos[i].y
-        ∑xy += puntos[i].x * puntos[i].y
+    for i ∈ axes(A, 1)
+        for j ∈ axes(A, 2)
+            ∑x = 0.0
+            for k ∈ 1:m
+                ∑x += puntos[i].x^j+i-2
+            end
+            A[i,j] = ∑x
+        end
     end
 
-    A[2,1] = ∑x
-    A[1,2] = ∑x
-    A[2,2] = ∑x2
-
-    B[1] = ∑y
-    B[2] = ∑xy
-
-    C = A * B
-
-    ∑x = 0.0
-
-    display(C)
+    display(A)
 end
+
+p_0 = Punto(-2.3, -18.7)
+p_1 = Punto(-1.1, -6.5)
+p_2 = Punto(0.3, -2.5)
+p_3 = Punto(1.3, 1.8)
+p_4 = Punto(2.2, 11.1)
+p_5 = Punto(2.8, 14.6)
+
+puntos = [p_0, p_1, p_2, p_3, p_4, p_5]
+
+min_cuadrados(puntos, 3)
+
