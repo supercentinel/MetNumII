@@ -82,8 +82,8 @@ function Spline_C(puntos::Array{Punto}, outprint::Bool)
             println(a[i], "(x - ", puntos[i].x, ")^3 + ",
                     b[i], "(x - ", puntos[i].x, ")^2 + ",
                     c[i] ,"(x - ", puntos[i].x, ")  + ",
-                    puntos[i].y,", ",
-                    puntos[i].x," ≤ x ≤ ", puntos[i+1].x)
+                    puntos[i].y,", (",
+                    puntos[i].x," ≤ x ≤ ", puntos[i+1].x,")")
             end
         fn[i] = @sprintf("%LF * (x - %LF)^3 + %LF * (x - %LF)^2 + %LF * (x - %LF) + %LF", a[i], puntos[i].x, b[i], puntos[i].x, c[i], puntos[i].x, puntos[i].y)
         g[i] = fcnFromString(fn[i])
