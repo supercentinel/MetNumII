@@ -11,18 +11,45 @@ function min_cuadrados(puntos::Array{Punto}, grado::Int64)
     C = zeros(Float64, n, 1)
     ∑x = 0.0
     ∑y = 0.0
+    n = 0
 
+    #filling A
     for i ∈ axes(A, 1)
         for j ∈ axes(A, 2)
             ∑x = 0.0
             for k ∈ 1:m
-                ∑x += puntos[i].x^j+i-2
+                n = j+i-2
+                ∑x += (puntos[k].x)^n
             end
             A[i,j] = ∑x
         end
     end
 
-    display(A)
+    #Filling B
+    for i ∈ axes(B, 1)
+        n = i-1
+        ∑y = 0.0
+        for k ∈ 1:m
+            ∑y += puntos[k].y * puntos[k].x^n
+        end
+        B[i] = ∑y
+    end
+
+    #Solving C
+    C = inv(A) * B
+
+    #print polynomial
+    for i ∈ axes(C, 1)
+        if i == 1
+            print(C[i]," + ")
+            continue
+        end
+        if i ≠ length(C)
+            print(C[i], " * x^", i-1, " + ")
+        else
+            println(C[i], " * x^", i-1)
+        end
+    end
 end
 
 p_0 = Punto(-2.3, -18.7)
