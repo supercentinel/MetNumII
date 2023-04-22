@@ -3,7 +3,12 @@ struct Punto
     y::Float64
 end
 
-function min_cuadrados(puntos::Array{Punto}, grado::Int64)
+function fcnFromString(s)
+    f = eval(Meta.parse("x -> " * s))
+    return x -> Base.invokelatest(f, x)
+end
+
+function min_cuadrados(puntos::Array{Punto}, grado::Int64, outprint::Bool)
     m = length(puntos)
     n = grado+1
     A = zeros(Float64, n, n)
@@ -12,6 +17,7 @@ function min_cuadrados(puntos::Array{Punto}, grado::Int64)
     ∑x = 0.0
     ∑y = 0.0
     n = 0
+    g = ""
 
     #filling A
     for i ∈ axes(A, 1)
@@ -41,25 +47,26 @@ function min_cuadrados(puntos::Array{Punto}, grado::Int64)
     #print polynomial
     for i ∈ axes(C, 1)
         if i == 1
-            print(C[i]," + ")
+            if outprint == true
+                print(C[i]," + ")
+            end
+            g = string(g, C[i], " + ")
             continue
         end
         if i ≠ length(C)
-            print(C[i], " * x^", i-1, " + ")
+            if outprint == true
+                print(C[i], " * x^", i-1, " + ")
+            end
+            g = string(g, C[i], " * x^", i-1, " + ")
         else
-            println(C[i], " * x^", i-1)
+            if outprint == true
+                println(C[i], " * x^", i-1)
+            end
+            g = string(g, C[i], " * x^", i-1)
         end
     end
+
+    fx = fcnFromString(g)
+
+    return fx
 end
-
-p_0 = Punto(-2.3, -18.7)
-p_1 = Punto(-1.1, -6.5)
-p_2 = Punto(0.3, -2.5)
-p_3 = Punto(1.3, 1.8)
-p_4 = Punto(2.2, 11.1)
-p_5 = Punto(2.8, 14.6)
-
-puntos = [p_0, p_1, p_2, p_3, p_4, p_5]
-
-min_cuadrados(puntos, 3)
-
