@@ -71,3 +71,6 @@ Cargo.lock
 
 #images
 *.png
+
+#Julia
+Manifest.toml
