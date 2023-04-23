@@ -33,7 +33,7 @@ function min_exponencial(puntos::Array{Punto}, o::Float64, outprint::Bool)
 
     t = o * C[1]
 
-    s = string(exp(C[2]), " * exp(", t,"/(", o, " * x))")
+    s = string(exp(C[2]), " * exp(", t,"/(x))")
 
     if outprint == true
         println(s)
