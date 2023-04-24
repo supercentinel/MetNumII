@@ -1,3 +1,4 @@
+using LaTeXStrings
 using Plots
 include("potencial.jl")
 
@@ -15,16 +16,19 @@ p_11 = Punto(199.5, 9.89)
 
 
 puntos = [p_1, p_2, p_3, p_4, p_5, p_6, p_7, p_8, p_9, p_10, p_11]
+err::Float64 = 0.0
 
-f = min_potencial(puntos, false)
+f = min_potencial(puntos, true)
+r = range(20, 250, length=100)
 
-plot(show=true, title="yes")
+plot(show=true, title="Potencial", size=(1920, 1080))
 
 for punto ∈ puntos
-    scatter!([punto.x], [punto.y])
+    scatter!([punto.x], [punto.y], label="")
+    global err += (punto.y - f(punto.x))^2
 end
 
-plot!(f)
+plot!(r, f, label=L"y=Cx^A")
+println("error = ", err)
 readline()
-
-
+savefig("pot_ejemplo.png")

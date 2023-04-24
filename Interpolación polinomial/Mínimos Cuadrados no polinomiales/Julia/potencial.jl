@@ -34,6 +34,10 @@ function min_potencial(puntos::Array{Punto}, outprint::Bool)
     s = string(exp(C[2]), " * x^", C[1])
 
     if outprint == true
+        display(L)
+        display(A)
+        display(B)
+        display(C)
         println(s)
     end
 
