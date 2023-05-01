@@ -44,6 +44,12 @@ function min_cuadrados(puntos::Array{Punto}, grado::Int64, outprint::Bool)
     #Solving C
     C = inv(A) * B
 
+    if outprint == true
+        display(A)
+        display(B)
+        display(C)
+    end
+
     #print polynomial
     for i ∈ axes(C, 1)
         if i == 1

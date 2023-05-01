@@ -58,6 +58,10 @@ function Spline_C(puntos::Array{Punto}, outprint::Bool)
     end
 
     S = inv(nu_A) * B
+    if outprint == true
+        println("S")
+        display(S)
+    end
 
     #definitely, it works
     for i ∈ axes(a, 1)
