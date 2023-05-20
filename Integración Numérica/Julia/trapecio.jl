@@ -8,7 +8,6 @@ function trapecio(puntos::Array{Punto}, outprint::Bool)
     h::Float64 = puntos[2].x - puntos[1].x
 
     for i ∈ axes(puntos, 1)[begin+1:end-1]
-        println("f(x_i) = ", puntos[i].y)
         ∑f_i += puntos[i].y
     end
 
