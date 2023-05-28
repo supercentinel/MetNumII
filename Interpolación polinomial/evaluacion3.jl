@@ -29,7 +29,7 @@ perro[17] = Punto(8.8, 4.1)
 
 g = Spline_C(perro, true)
 
-plot(show=true, size=(1920, 1080), label="perro")
+plot(show=true, size=(1920, 1080), title="perro")
 
 for i in axes(g, 1)
     r = range(perro[i].x, perro[i+1].x, length=100)
@@ -75,10 +75,10 @@ m_3 = min_cuadrados(min_c, 3, true)
 err_m_3::Float64 = 0.0
 
 
-plot(show=true, size=(1920, 1080), label="min cuadrados polinomial")
+plot(show=true, size=(1920, 1080), title="min cuadrados polinomial")
 
 for punto ∈ min_c
-    scatter!([punto.x], [punto.y])
+    scatter!([punto.x], [punto.y], label="")
     global err_m_2 += (punto.y - m_2(punto.x))^2
     global err_m_3 += (punto.y - m_3(punto.x))^2
 end
@@ -125,10 +125,10 @@ pot = min_potencial(min_np ,true)
 println("Exponencial")
 expo = min_exponencial(min_np, 1.0, true)
 
-plot(show=true, size=(1920, 1080), label="min cuadrados no polinomial")
+plot(show=true, size=(1920, 1080), title="min cuadrados no polinomial")
 
 for punto ∈ min_np
-    scatter!([punto.x], [punto.y])
+    scatter!([punto.x], [punto.y], label="")
     global err_mn_2 += (punto.y - pot(punto.x))^2
     global err_mn_3 += (punto.y - expo(punto.x))^2
 end
