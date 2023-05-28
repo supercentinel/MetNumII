@@ -35,9 +35,13 @@ function romberg(puntos::Array{Punto}, f::Function, k::Int64, outprint::Bool)
             hs[1] = h
         end
     end
+
+    if outprint == true
+        display(hs)
+    end
     
     n_n = (puntos[length(puntos)].x - puntos[1].x)/hs[length(hs)]
-    n_n = Int64(n_n)
+    n_n = Int64(floor(n_n))
     
     #Big Fucking Array of points
     bfp = Array{Punto}(undef, n_n+1)
