@@ -77,15 +77,3 @@ function diff_divididas(puntos::Array{Punto}, grado::Int64, x::Float64, outprint
 
     return estimacion
 end
-
-
-puntos = Array{Punto}(undef, 5)
-
-puntos[1] = Punto(0.5, -0.46828)
-puntos[2] = Punto(1.0, -2.88906)
-puntos[3] = Punto(1.1, -3.89501)
-puntos[4] = Punto(1.3, -6.89374)
-puntos[5] = Punto(1.6, -15.35253)
-
-est = diff_divididas(puntos, 4, 0.8, true)
-println(est)
