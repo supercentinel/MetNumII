@@ -10,8 +10,8 @@ function trapecio_mod(puntos::Array{Punto}, h::Float64)
     x = puntos[1].x + h
 
     for i ∈ axes(puntos, 1)[begin+1:end-1]
-        
-        if x == puntos[i].x
+
+        if round(x, digits=12) == round(puntos[i].x, digits=12)
             ∑f_i += puntos[i].y
             x = x + h
         end
@@ -30,19 +30,19 @@ function romberg(puntos::Array{Punto}, f::Function, k::Int64, outprint::Bool)
 
     for i ∈ axes(hs, 1)
         if i > 1
-            hs[i] = hs[i-1]/2
+            hs[i] = round(hs[i-1]/2, digits=12)
         else
-            hs[1] = h
+            hs[1] = round(h, digits=12)
         end
     end
 
     if outprint == true
         display(hs)
     end
-    
+
     n_n = (puntos[length(puntos)].x - puntos[1].x)/hs[length(hs)]
     n_n = Int64(floor(n_n))
-    
+
     #Big Fucking Array of points
     bfp = Array{Punto}(undef, n_n+1)
 

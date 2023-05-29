@@ -4,10 +4,10 @@ function f(x::Float64)
     return (x^5) * ((sqrt(3 + (2 * x^2)))/(4))
 end
 
-puntos = Array{Punto}(undef, 4)
+puntos = Array{Punto}(undef, 16)
 
 x = 0.5
-h = 0.5
+h = 0.1
 
 for i ∈ axes(puntos, 1)
     puntos[i] = Punto(x, f(x))
