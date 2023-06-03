@@ -3,7 +3,7 @@ struct Punto
     y::Float64
 end
 
-function diferecias_divididas(puntos::Array{Punto}, est::Float64, grado::Int64, outprint::Bool)
+function diferencias_divididas(puntos::Array{Punto}, est::Float64, grado::Int64, outprint::Bool)
     dif_div = zeros(Float64, length(puntos), length(puntos)+1)
     estimacion::Float64 = 0.0
     ∏c::Float64 = 1.0
